@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2003
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobilFit_API", "MobilFit_API\MobilFit_API.csproj", "{5C268E9D-CDBD-4C0A-ADCA-9AB709475F2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backDataMobilFit", "backDataMobilFit\backDataMobilFit.csproj", "{BF4F0411-E635-4C58-9B5B-60E92AD2E098}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5C268E9D-CDBD-4C0A-ADCA-9AB709475F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C268E9D-CDBD-4C0A-ADCA-9AB709475F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C268E9D-CDBD-4C0A-ADCA-9AB709475F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C268E9D-CDBD-4C0A-ADCA-9AB709475F2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF4F0411-E635-4C58-9B5B-60E92AD2E098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF4F0411-E635-4C58-9B5B-60E92AD2E098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF4F0411-E635-4C58-9B5B-60E92AD2E098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF4F0411-E635-4C58-9B5B-60E92AD2E098}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FAD00F5C-867E-4A9B-A8B6-7EF89D1296EA}
+	EndGlobalSection
+EndGlobal
