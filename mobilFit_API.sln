@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobilFit_API", "MobilFit_API\MobilFit_API.csproj", "{5C268E9D-CDBD-4C0A-ADCA-9AB709475F2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backMobilFitData_V1", "backMobilFitData_V1\backMobilFitData_V1.csproj", "{7EE1A30D-ABD0-484E-831C-661D873330FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backMobilFitData", "backMobilFitData_V1\backMobilFitData.csproj", "{7EE1A30D-ABD0-484E-831C-661D873330FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

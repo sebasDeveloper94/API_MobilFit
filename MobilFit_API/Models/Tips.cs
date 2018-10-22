@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Web;
 
-namespace backDataMobilFit.Models
+namespace MobilFit_API.Models
 {
-    class Tips
+    public class Tips
     {
         public int id_tips { get; set; }
         public string descripcion { get; set; }

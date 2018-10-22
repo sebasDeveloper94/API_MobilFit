@@ -12,6 +12,7 @@ namespace backDataMobilFit.Models
         public int repeticiones { get; set; }
         public int series { get; set; }
         public DateTime tiempo { get; set; }
+        public decimal distancia { get; set; }
         public int id_rutina { get; set; }
         public Ejercicio()
         {

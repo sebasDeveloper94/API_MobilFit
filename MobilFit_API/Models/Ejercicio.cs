@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Web;
 
-namespace backDataMobilFit.Models
+namespace MobilFit_API.Models
 {
-    class Ejercicio
+    public class Ejercicio
     {
         public int id_ejercicio { get; set; }
         public string nombre_ejercicio { get; set; }
@@ -12,6 +13,7 @@ namespace backDataMobilFit.Models
         public int repeticiones { get; set; }
         public int series { get; set; }
         public DateTime tiempo { get; set; }
+        public decimal distancia { get; set; }
         public int id_rutina { get; set; }
         public Ejercicio()
         {

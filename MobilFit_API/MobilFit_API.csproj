@@ -45,6 +45,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="backMobilFitData_V1, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Librerias\backMobilFitData_V1.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -150,6 +154,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aplicacion\DesempeñoAplicacionServicios.cs" />
+    <Compile Include="Aplicacion\EjerciciosAplicacionServicios.cs" />
+    <Compile Include="Aplicacion\LoginAplicacionServicios.cs" />
+    <Compile Include="Aplicacion\ReporteDesempeñoAplicacionServicios.cs" />
+    <Compile Include="Aplicacion\RutinasAplicacionServicios.cs" />
+    <Compile Include="Aplicacion\UsuariosAplicacionServicios.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -187,6 +197,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Desempeño.cs" />
+    <Compile Include="Models\Ejercicio.cs" />
+    <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\Nivel.cs" />
+    <Compile Include="Models\ReporteDesempeño.cs" />
+    <Compile Include="Models\Rutina.cs" />
+    <Compile Include="Models\Tips.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -245,7 +263,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

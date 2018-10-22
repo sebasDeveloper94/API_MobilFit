@@ -7,8 +7,8 @@
     <ProjectGuid>{7EE1A30D-ABD0-484E-831C-661D873330FB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>backMobilFitData_V1</RootNamespace>
-    <AssemblyName>backMobilFitData_V1</AssemblyName>
+    <RootNamespace>backMobilFitData</RootNamespace>
+    <AssemblyName>backMobilFitData</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -44,16 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aplicacion\DesempeñoAplicacionServicios.cs" />
+    <Compile Include="Aplicacion\EjerciciosAplicacionServicios.cs" />
+    <Compile Include="Aplicacion\LoginAplicacionServicios.cs" />
+    <Compile Include="Aplicacion\ReporteDesempeñoAplicacionServicios.cs" />
+    <Compile Include="Aplicacion\RutinasAplicacionServicios.cs" />
+    <Compile Include="Aplicacion\UsuariosAplicacionServicios.cs" />
+    <Compile Include="Models\Desempeño.cs" />
     <Compile Include="Models\Ejercicio.cs" />
+    <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Nivel.cs" />
+    <Compile Include="Models\ReporteDesempeño.cs" />
     <Compile Include="Models\Rutina.cs" />
     <Compile Include="Models\Tips.cs" />
     <Compile Include="Models\Usuario.cs" />
-    <Compile Include="Persistence\UsuarioData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Infraestructure\" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

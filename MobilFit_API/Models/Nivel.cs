@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Web;
 
-namespace backDataMobilFit.Models
+namespace MobilFit_API.Models
 {
-    class Nivel
+    public class Nivel
     {
         public int id_nivel { get; set; }
         public string descripcion { get; set; }
         public Nivel()
         {
-                
+
         }
     }
 }
