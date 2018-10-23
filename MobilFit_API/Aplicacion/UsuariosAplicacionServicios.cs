@@ -1,4 +1,4 @@
-﻿using backDataMobilFit.Models;
+﻿using MobilFit_API.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace backMobilFitData.Aplicacion
+namespace MobilFit_API.Aplicacion
 {
     class UsuariosAplicacionServicios
     {
@@ -29,7 +29,7 @@ namespace backMobilFitData.Aplicacion
 
             try
             {
-                sqlCommand = new SqlCommand();
+                sqlCommand = new SqlCommand(sql, sqlConnection);
                 sqlConnection.Open();
                 reader = sqlCommand.ExecuteReader();
                 while (reader.Read())
@@ -72,7 +72,7 @@ namespace backMobilFitData.Aplicacion
 
             try
             {
-                sqlCommand = new SqlCommand();
+                sqlCommand = new SqlCommand(sql, sqlConnection);
                 sqlConnection.Open();
                 reader = sqlCommand.ExecuteReader();
                 while (reader.Read())

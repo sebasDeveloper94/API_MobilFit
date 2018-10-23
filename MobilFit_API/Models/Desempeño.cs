@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace backMobilFitData_V1.Models
+namespace MobilFit_API.Models
 {
     class Desempeño
     {
