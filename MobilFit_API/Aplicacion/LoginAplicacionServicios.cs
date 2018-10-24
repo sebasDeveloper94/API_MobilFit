@@ -48,9 +48,10 @@ namespace MobilFit_API.Aplicacion
             SqlDataReader reader;
             int inserto = 0;
             string sql = string.Empty;
-            sql += string.Format("INSERT INTO Usuario VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', {7}. {8}, {9}, {10})", objUsuario.nombre,
+            sql += string.Format(@"INSERT INTO Usuario (nombre, apellido_paterno, apellido_materno, email, contraseña, nombre_usuario, fecha_registro, peso, altura," +
+                                    "id_tipocuerpo, id_nivel)  VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', {7}, {8}, {9}, {10})", objUsuario.nombre,
                 objUsuario.apellido_paterno, objUsuario.apellido_materno, objUsuario.email, objUsuario.contraseña, objUsuario.nombre_usuario, objUsuario.fechaRegistro,
-                objUsuario.peso, objUsuario.altura, objUsuario.id_tipoCuerpo, objUsuario.id_nivel);
+                objUsuario.peso.ToString(), objUsuario.altura, objUsuario.id_tipoCuerpo, objUsuario.id_nivel);
 
             try
             {
@@ -60,7 +61,7 @@ namespace MobilFit_API.Aplicacion
                 inserto = reader.RecordsAffected;
                 connection.Close();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return 0;
             }

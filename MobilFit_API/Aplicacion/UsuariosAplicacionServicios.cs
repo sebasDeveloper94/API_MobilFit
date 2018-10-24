@@ -82,13 +82,12 @@ namespace MobilFit_API.Aplicacion
                     objUsuarios.apellido_paterno = reader["apellido_paterno"].ToString();
                     objUsuarios.apellido_materno = reader["apellido_materno"].ToString();
                     objUsuarios.email = reader["email"].ToString();
-                    objUsuarios.contraseña = reader["contrasenha"].ToString();
+                    objUsuarios.contraseña = reader["contraseña"].ToString();
                     objUsuarios.nombre_usuario = reader["nombre_usuario"].ToString();
                     objUsuarios.fechaRegistro = DateTime.Parse(reader["fecha_registro"].ToString());
                     objUsuarios.peso = decimal.Parse(reader["peso"].ToString());
                     objUsuarios.altura = decimal.Parse(reader["altura"].ToString());
-                    objUsuarios.id_tipoCuerpo = int.Parse(reader["contraindicacion"].ToString());
-                    objUsuarios.id_contraindicacion = int.Parse(reader["objetivo"].ToString());
+                    objUsuarios.id_tipoCuerpo = int.Parse(reader["id_tipocuerpo"].ToString());
                     objUsuarios.id_nivel = int.Parse(reader["id_nivel"].ToString());
                 }
                 sqlConnection.Close();

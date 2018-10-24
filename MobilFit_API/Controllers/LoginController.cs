@@ -4,9 +4,12 @@ using MobilFit_API.Persistencia;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Web.Http;
 
 namespace MobilFit_API.Controllers
@@ -39,7 +42,9 @@ namespace MobilFit_API.Controllers
         public string Registrar(string jsonUsuario)
         {
             Usuario objUsuario = new Usuario();
-            objUsuario = (Usuario)JsonConvert.DeserializeObject(jsonUsuario) as Usuario;
+            MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonUsuario));
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Usuario));
+            objUsuario = serializer.ReadObject(ms) as Usuario;
             if (objUsuario != null)
             {
                 LoginAplicacionServicios loginApp = new LoginAplicacionServicios(conexionSQL.cadenaConexion);
