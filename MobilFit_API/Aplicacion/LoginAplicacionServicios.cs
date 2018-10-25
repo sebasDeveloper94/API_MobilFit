@@ -24,7 +24,7 @@ namespace MobilFit_API.Aplicacion
             SqlDataReader reader;
             bool loginCorrecto = false;
             string sql = string.Empty;
-            sql = string.Format("SELECT * FROM Usuario WHERE nombre_usuario  = {0} OR email = {0} AND Contraseña = {1}", usuario, contraseña);
+            sql = string.Format("SELECT * FROM Usuario WHERE nombre_usuario  = '{0}' OR email = '{0}' AND Contraseña = '{1}'", usuario, contraseña);
 
             try
             {
@@ -41,18 +41,19 @@ namespace MobilFit_API.Aplicacion
 
             return loginCorrecto;
         }
-        public int RegistrarUsuario(Usuario objUsuario) {
-
+        public int RegistrarUsuario(Usuario objUsuario)
+        {
             SqlConnection connection = new SqlConnection(this.connection);
             SqlCommand sqlCommand;
             SqlDataReader reader;
-            int inserto = 0;
-            string sql = string.Empty;
-            sql += string.Format(@"INSERT INTO Usuario (nombre, apellido_paterno, apellido_materno, email, contraseña, nombre_usuario, fecha_registro, peso, altura," +
-                                    "id_tipocuerpo, id_nivel)  VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', {7}, {8}, {9}, {10})", objUsuario.nombre,
-                objUsuario.apellido_paterno, objUsuario.apellido_materno, objUsuario.email, objUsuario.contraseña, objUsuario.nombre_usuario, objUsuario.fechaRegistro,
-                objUsuario.peso.ToString(), objUsuario.altura, objUsuario.id_tipoCuerpo, objUsuario.id_nivel);
 
+            int inserto = 0;
+            DateTime fecha = objUsuario.fechaRegistro.ToString("dd-MM-yyyy") == "01-01-0001" ? DateTime.Parse("01-01-1900") : objUsuario.fechaRegistro;
+            string sql = string.Empty;
+            sql += "INSERT INTO Usuario (nombre, apellido_paterno, apellido_materno, email, contraseña, nombre_usuario, fecha_registro, peso, altura," +
+                                    "id_tipocuerpo, id_nivel)  VALUES ('" + objUsuario.nombre + "', '" + objUsuario.apellido_paterno + "', '" + objUsuario.apellido_materno + "'" +
+                                    ", '" + objUsuario.email + "', '" + objUsuario.contraseña + "', '" + objUsuario.nombre_usuario + "', '" + fecha + "'," +
+                                    "'" + objUsuario.peso + "', '" + objUsuario.altura + "', " + objUsuario.id_tipoCuerpo + ", " + objUsuario.id_nivel + ")";
             try
             {
                 sqlCommand = new SqlCommand(sql, connection);
