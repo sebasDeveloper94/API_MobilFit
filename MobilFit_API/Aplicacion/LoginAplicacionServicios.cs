@@ -53,7 +53,7 @@ namespace MobilFit_API.Aplicacion
             sql += "INSERT INTO Usuario (nombre, apellido_paterno, apellido_materno, email, contraseña, nombre_usuario, fecha_registro, peso, altura," +
                                     "id_tipocuerpo, id_nivel)  VALUES ('" + objUsuario.nombre + "', '" + objUsuario.apellido_paterno + "', '" + objUsuario.apellido_materno + "'" +
                                     ", '" + objUsuario.email + "', '" + objUsuario.contraseña + "', '" + objUsuario.nombre_usuario + "', '" + fecha + "'," +
-                                    "'" + objUsuario.peso + "', '" + objUsuario.altura + "', " + objUsuario.id_tipoCuerpo + ", " + objUsuario.id_nivel + ")";
+                                    "" + objUsuario.peso + ", " + objUsuario.altura + ", " + objUsuario.id_tipoCuerpo + ", " + objUsuario.id_nivel + ")";
             try
             {
                 sqlCommand = new SqlCommand(sql, connection);
