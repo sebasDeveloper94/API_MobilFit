@@ -24,7 +24,7 @@ namespace MobilFit_API.Aplicacion
             SqlDataReader reader;
             bool loginCorrecto = false;
             string sql = string.Empty;
-            sql = string.Format("SELECT * FROM Usuario WHERE nombre_usuario  = '{0}' OR email = '{0}' AND Contraseña = '{1}'", usuario, contraseña);
+            sql = string.Format("SELECT * FROM Usuario WHERE email = '{0}' AND Contraseña = '{1}'", usuario, contraseña);
 
             try
             {
