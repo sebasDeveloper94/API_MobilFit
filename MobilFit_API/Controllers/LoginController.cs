@@ -21,7 +21,7 @@ namespace MobilFit_API.Controllers
 
         }
 
-        [AcceptVerbs("GET", "POST")]
+        [AcceptVerbs("GET")]
         [HttpGet]
         public string Login(string usuario, string contraseña) {
 
