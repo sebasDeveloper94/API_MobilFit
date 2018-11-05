@@ -37,7 +37,7 @@ namespace MobilFit_API.Controllers
             }
         }
 
-        [AcceptVerbs("GET", "POST")]
+        [AcceptVerbs("POST")]
         [HttpGet]
         public string Registrar(string jsonUsuario)
         {
