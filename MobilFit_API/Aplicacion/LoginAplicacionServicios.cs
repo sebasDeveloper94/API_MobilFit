@@ -50,10 +50,14 @@ namespace MobilFit_API.Aplicacion
             int inserto = 0;
             DateTime fecha = objUsuario.fechaRegistro.ToString("dd-MM-yyyy") == "01-01-0001" ? DateTime.Parse("01-01-1900") : objUsuario.fechaRegistro;
             string sql = string.Empty;
-            sql += "INSERT INTO Usuario (nombre, apellido_paterno, apellido_materno, email, contraseña, nombre_usuario, fecha_registro, peso, altura," +
+            sql += @"DECLARE @ULTIMO_ID INT
+                    INSERT INTO Usuario (nombre, apellido_paterno, apellido_materno, email, contraseña, nombre_usuario, fecha_registro, peso, altura," +
                                     "id_tipocuerpo, id_nivel)  VALUES ('" + objUsuario.nombre + "', '" + objUsuario.apellido_paterno + "', '" + objUsuario.apellido_materno + "'" +
                                     ", '" + objUsuario.email + "', '" + objUsuario.contraseña + "', '" + objUsuario.nombre_usuario + "', '" + fecha + "'," +
-                                    "" + objUsuario.peso + ", " + objUsuario.altura + ", " + objUsuario.id_tipoCuerpo + ", " + objUsuario.id_nivel + ")";
+                                    "" + objUsuario.peso + ", " + objUsuario.altura + ", " + objUsuario.id_tipoCuerpo + ", " + objUsuario.id_nivel + ")"+
+                                    "(SELECT @ULTIMO_ID = scope_identity())" +//Rescata el utlimo ID_usuario insertado para insertarlo en las tablas de relacionadas al usuario
+                                    "INSERT INTO Usuario_Objetivo (id_objetivo, id_usuario) VALUES (" +objUsuario.id_objetivo+", @ULTIMO_ID)"+
+                                    "INSERT INTO Usuario_Contraindicacion (id_contraindicacion, id_usuario) VALUES (" + objUsuario.id_objetivo + ", @ULTIMO_ID)";
             try
             {
                 sqlCommand = new SqlCommand(sql, connection);

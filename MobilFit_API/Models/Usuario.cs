@@ -19,6 +19,8 @@ namespace MobilFit_API.Models
         public decimal altura { get; set; }
         public int id_tipoCuerpo { get; set; }
         public int id_nivel { get; set; }
+        public int id_objetivo { get; set; }
+        public int id_contraindicacion { get; set; }
 
         public Usuario()
         {
