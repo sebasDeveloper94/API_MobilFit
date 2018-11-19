@@ -38,10 +38,8 @@ namespace MobilFit_API.Aplicacion
                         id_rutina = int.Parse(reader["id_usuario"].ToString()),
                         nombre = reader["nombre"].ToString(),
                         meta = reader["meta"].ToString(),
-                        dia = int.Parse(reader["dia"].ToString()),
-                        id_tipoRutina = int.Parse(reader["tipo"].ToString()),
-                        id_categoria = int.Parse(reader["categoria"].ToString()),
-                        id_nivel = int.Parse(reader["id_nivel"].ToString())
+                        id_tipoRutina = int.Parse(reader["id_tipo_rutina"].ToString()),
+                        id_categoria = int.Parse(reader["id_categoria"].ToString()),
                     });
                 }
                 sqlConnection.Close();
@@ -53,7 +51,6 @@ namespace MobilFit_API.Aplicacion
 
             return listRutinas;
         }
-
         public Rutina GetRutina(int id_rutina)
         {
             SqlConnection sqlConnection = new SqlConnection(this.connection);
@@ -73,10 +70,8 @@ namespace MobilFit_API.Aplicacion
                     objRutina.id_rutina = int.Parse(reader["id_usuario"].ToString());
                     objRutina.nombre = reader["nombre"].ToString();
                     objRutina.meta = reader["meta"].ToString();
-                    objRutina.dia = int.Parse(reader["dia"].ToString());
-                    objRutina.id_tipoRutina = int.Parse(reader["tipo"].ToString());
-                    objRutina.id_categoria = int.Parse(reader["categoria"].ToString());
-                    objRutina.id_nivel = int.Parse(reader["id_nivel"].ToString());
+                    objRutina.id_tipoRutina = int.Parse(reader["id_tipo_rutina"].ToString());
+                    objRutina.id_categoria = int.Parse(reader["id_categoria"].ToString());
                 }
                 sqlConnection.Close();
             }

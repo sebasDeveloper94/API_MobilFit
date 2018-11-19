@@ -40,20 +40,19 @@ namespace MobilFit_API.Aplicacion
                         nombre = reader["nombre"].ToString(),
                         apellido_paterno = reader["apellido_paterno"].ToString(),
                         apellido_materno = reader["apellido_materno"].ToString(),
+                        sexo = int.Parse(reader["sexo"].ToString()),
                         email = reader["email"].ToString(),
                         contraseña = reader["contrasenha"].ToString(),
-                        nombre_usuario = reader["nombre_usuario"].ToString(),
                         fechaRegistro = DateTime.Parse(reader["fecha_registro"].ToString()),
                         peso = decimal.Parse(reader["peso"].ToString()),
                         altura = decimal.Parse(reader["altura"].ToString()),
                         id_tipoCuerpo = int.Parse(reader["id_tipocuerpo"].ToString()),
                         id_nivel = int.Parse(reader["id_nivel"].ToString()),
                         id_objetivo = int.Parse(reader["id_objetivo"].ToString()),
-                        id_contraindicacion = int.Parse(reader["id_contraindicacion"].ToString())
-                });
-            }
+                    });
+                }
                 sqlConnection.Close();
-        }
+            }
             catch (Exception ex)
             {
                 return null;
@@ -62,46 +61,45 @@ namespace MobilFit_API.Aplicacion
             return listUsuarios;
         }
 
-public Usuario GetUsuario(int id_usuario)
-{
-
-    SqlConnection sqlConnection = new SqlConnection(this.connection);
-    SqlCommand sqlCommand;
-    SqlDataReader reader;
-    Usuario objUsuarios = new Usuario();
-    string sql = string.Empty;
-    sql = "SELECT * FROM Usuario WHERE id_usuario =" + id_usuario;
-
-    try
-    {
-        sqlCommand = new SqlCommand(sql, sqlConnection);
-        sqlConnection.Open();
-        reader = sqlCommand.ExecuteReader();
-        while (reader.Read())
+        public Usuario GetUsuario(int id_usuario)
         {
-            objUsuarios.id_usuario = int.Parse(reader["id_usuario"].ToString());
-            objUsuarios.nombre = reader["nombre"].ToString();
-            objUsuarios.apellido_paterno = reader["apellido_paterno"].ToString();
-            objUsuarios.apellido_materno = reader["apellido_materno"].ToString();
-            objUsuarios.email = reader["email"].ToString();
-            objUsuarios.contraseña = reader["contraseña"].ToString();
-            objUsuarios.nombre_usuario = reader["nombre_usuario"].ToString();
-            objUsuarios.fechaRegistro = DateTime.Parse(reader["fecha_registro"].ToString());
-            objUsuarios.peso = decimal.Parse(reader["peso"].ToString());
-            objUsuarios.altura = decimal.Parse(reader["altura"].ToString());
-            objUsuarios.id_tipoCuerpo = int.Parse(reader["id_tipocuerpo"].ToString());
-            objUsuarios.id_nivel = int.Parse(reader["id_nivel"].ToString());
-            objUsuarios.id_objetivo = int.Parse(reader["id_objetivo"].ToString());
-            objUsuarios.id_contraindicacion = int.Parse(reader["id_contraindicacion"].ToString());
-        }
-        sqlConnection.Close();
-    }
-    catch (Exception ex)
-    {
-        throw new Exception("El error fue ", ex);
-    }
 
-    return objUsuarios;
-}
+            SqlConnection sqlConnection = new SqlConnection(this.connection);
+            SqlCommand sqlCommand;
+            SqlDataReader reader;
+            Usuario objUsuarios = new Usuario();
+            string sql = string.Empty;
+            sql = "SELECT * FROM Usuario WHERE id_usuario =" + id_usuario;
+
+            try
+            {
+                sqlCommand = new SqlCommand(sql, sqlConnection);
+                sqlConnection.Open();
+                reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    objUsuarios.id_usuario = int.Parse(reader["id_usuario"].ToString());
+                    objUsuarios.nombre = reader["nombre"].ToString();
+                    objUsuarios.apellido_paterno = reader["apellido_paterno"].ToString();
+                    objUsuarios.apellido_materno = reader["apellido_materno"].ToString();
+                    objUsuarios.sexo = int.Parse(reader["sexo"].ToString());
+                    objUsuarios.email = reader["email"].ToString();
+                    objUsuarios.contraseña = reader["contraseña"].ToString();
+                    objUsuarios.fechaRegistro = DateTime.Parse(reader["fecha_registro"].ToString());
+                    objUsuarios.peso = decimal.Parse(reader["peso"].ToString());
+                    objUsuarios.altura = decimal.Parse(reader["altura"].ToString());
+                    objUsuarios.id_tipoCuerpo = int.Parse(reader["id_tipocuerpo"].ToString());
+                    objUsuarios.id_nivel = int.Parse(reader["id_nivel"].ToString());
+                    objUsuarios.id_objetivo = int.Parse(reader["id_objetivo"].ToString());
+                }
+                sqlConnection.Close();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("El error fue ", ex);
+            }
+
+            return objUsuarios;
+        }
     }
 }

@@ -38,9 +38,10 @@ namespace MobilFit_API.Aplicacion
                     objEjercicio.descripcion = reader["descripcion"].ToString();
                     objEjercicio.repeticiones = int.Parse(reader["repeticiones"].ToString());
                     objEjercicio.series = int.Parse(reader["series"].ToString());
+                    objEjercicio.peso = decimal.Parse(reader["peso"].ToString());
                     objEjercicio.tiempo = DateTime.Parse(reader["tiempo"].ToString());
                     objEjercicio.distancia = decimal.Parse(reader["distancia"].ToString());
-                    objEjercicio.id_rutina = int.Parse(reader["id_rutina"].ToString());
+                    objEjercicio.descanso = decimal.Parse(reader["descanso"].ToString());
                 }
                 sqlConnection.Close();
             }

@@ -12,9 +12,10 @@ namespace MobilFit_API.Models
         public string descripcion { get; set; }
         public int repeticiones { get; set; }
         public int series { get; set; }
+        public decimal peso { get; set; }
         public DateTime tiempo { get; set; }
         public decimal distancia { get; set; }
-        public int id_rutina { get; set; }
+        public decimal descanso { get; set; }
         public Ejercicio()
         {
 

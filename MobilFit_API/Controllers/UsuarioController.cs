@@ -1,5 +1,4 @@
-﻿using backMobilFitData.Aplicacion;
-using MobilFit_API.Aplicacion;
+﻿using MobilFit_API.Aplicacion;
 using MobilFit_API.Models;
 using MobilFit_API.Persistencia;
 using System;

@@ -157,6 +157,7 @@
     <Compile Include="Aplicacion\DesempeñoAplicacionServicios.cs" />
     <Compile Include="Aplicacion\EjerciciosAplicacionServicios.cs" />
     <Compile Include="Aplicacion\LoginAplicacionServicios.cs" />
+    <Compile Include="Aplicacion\PlanEntrenamientoAplicacionServicios.cs" />
     <Compile Include="Aplicacion\ReporteDesempeñoAplicacionServicios.cs" />
     <Compile Include="Aplicacion\RutinasAplicacionServicios.cs" />
     <Compile Include="Aplicacion\UsuariosAplicacionServicios.cs" />
@@ -194,15 +195,19 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PlanEntrenamientoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Desempeño.cs" />
+    <Compile Include="Models\DiasEntrenamiento.cs" />
     <Compile Include="Models\Ejercicio.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Nivel.cs" />
+    <Compile Include="Models\PlanEntrenamiento.cs" />
+    <Compile Include="Models\Profesional.cs" />
     <Compile Include="Models\ReporteDesempeño.cs" />
     <Compile Include="Models\Rutina.cs" />
     <Compile Include="Models\Tips.cs" />
