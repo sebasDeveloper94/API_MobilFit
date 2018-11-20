@@ -26,28 +26,21 @@ namespace MobilFit_API.Aplicacion
             string sql = string.Empty;
             sql = "SELECT * FROM Usuario";
 
-            try
+            sqlCommand = new SqlCommand();
+            sqlConnection.Open();
+            reader = sqlCommand.ExecuteReader();
+            while (reader.Read())
             {
-                sqlCommand = new SqlCommand();
-                sqlConnection.Open();
-                reader = sqlCommand.ExecuteReader();
-                while (reader.Read())
+                listRutinas.Add(new Rutina()
                 {
-                    listRutinas.Add(new Rutina()
-                    {
-                        id_rutina = int.Parse(reader["id_usuario"].ToString()),
-                        nombre = reader["nombre"].ToString(),
-                        meta = reader["meta"].ToString(),
-                        id_tipoRutina = int.Parse(reader["id_tipo_rutina"].ToString()),
-                        id_categoria = int.Parse(reader["id_categoria"].ToString()),
-                    });
-                }
-                sqlConnection.Close();
+                    id_rutina = int.Parse(reader["id_usuario"].ToString()),
+                    nombre = reader["nombre"].ToString(),
+                    meta = reader["meta"].ToString(),
+                    id_tipoRutina = int.Parse(reader["id_tipo_rutina"].ToString()),
+                    id_categoria = int.Parse(reader["id_categoria"].ToString()),
+                });
             }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            sqlConnection.Close();
 
             return listRutinas;
         }

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using System.Web.Http;
 using MobilFit_API.Aplicacion;
 using MobilFit_API.Models;
@@ -27,6 +30,33 @@ namespace MobilFit_API.Controllers
                 return NotFound();
             }
             return Ok(objPlan);
+        }
+
+        [AcceptVerbs("POST")]
+        [HttpGet]
+        public string GuardarDias(string jsonDias)
+        {
+            DiasEntrenamiento objDias = new DiasEntrenamiento();
+            MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonDias));
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(DiasEntrenamiento));
+            objDias = serializer.ReadObject(ms) as DiasEntrenamiento;
+            if (objDias != null)
+            {
+                PlanEntrenamientoAplicacionServicios planApp = new PlanEntrenamientoAplicacionServicios(conexionSQL.cadenaConexion);
+                int guardado = planApp.GuardarDiasRutinas(objDias);
+                if (guardado > 0)
+                {
+                    return "ok";
+                }
+                else
+                {
+                    return "no";
+                }
+            }
+            else
+            {
+                return "no";
+            }
         }
     }
 }
