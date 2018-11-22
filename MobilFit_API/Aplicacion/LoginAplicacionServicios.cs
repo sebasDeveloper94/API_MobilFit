@@ -51,7 +51,7 @@ namespace MobilFit_API.Aplicacion
             DateTime fecha = objUsuario.fechaRegistro.ToString("dd-MM-yyyy") == "01-01-0001" ? DateTime.Parse("01-01-1900") : objUsuario.fechaRegistro;
             string sql = string.Empty;
             sql += @"DECLARE @ULTIMO_ID INT
-                    INSERT INTO Usuario (nombre, apellido_paterno, apellido_materno, email, contraseña, nombre_usuario, fecha_registro, peso, altura," +
+                    INSERT INTO Usuario (nombre, apellido_paterno, apellido_materno, sexo, email, contraseña, fecha_registro, peso, altura," +
                                     "id_tipocuerpo, id_nivel)  VALUES ('" + objUsuario.nombre + "', '" + objUsuario.apellido_paterno + "', '" + objUsuario.apellido_materno + "'" +
                                     ", "+objUsuario.sexo+", '" + objUsuario.email + "', '" + objUsuario.contraseña + "', '" + fecha + "'," +
                                     "" + objUsuario.peso + ", " + objUsuario.altura + ", " + objUsuario.id_tipoCuerpo + ", " + objUsuario.id_nivel + ")"+
