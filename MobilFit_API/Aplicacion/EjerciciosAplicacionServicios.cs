@@ -17,31 +17,40 @@ namespace MobilFit_API.Aplicacion
             this.connection = connection;
         }
         //metodos
-        public Ejercicio GetEjercicio(int id_rutina)
+        public List<Ejercicio> GetEjercicios(int id_rutina)
         {
             SqlConnection sqlConnection = new SqlConnection(this.connection);
             SqlCommand sqlCommand;
             SqlDataReader reader;
-            Ejercicio objEjercicio = new Ejercicio();
-            string sql = string.Empty;
-            sql = "SELECT * FROM Ejercicio WHERE id_usuario =" + id_rutina;
+            List<Ejercicio> ejercicios;
 
+            string sql = string.Empty;
+            sql = string.Format(@"SELECT E.id_ejercicio, E.nombre_ejercicio, E.descripcion, E.repeticiones, E.series, E.peso, E.tiempo, E.distancia, E.descanso
+                                    FROM Rutina R, Ejercicio E
+                                    INNER JOIN Ejercicio_Rutina ER ON ER.id_ejercicio = E.id_ejercicio
+                                    WHERE R.id_rutina = {0} AND R.id_rutina = ER.id_rutina", id_rutina);
             try
             {
-                sqlCommand = new SqlCommand();
+                sqlCommand = new SqlCommand(sql, sqlConnection);
                 sqlConnection.Open();
                 reader = sqlCommand.ExecuteReader();
+                ejercicios = new List<Ejercicio>();
                 while (reader.Read())
                 {
-                    objEjercicio.id_ejercicio = int.Parse(reader["id_ejercicio"].ToString());
-                    objEjercicio.nombre_ejercicio = reader["nombre_ejercicio"].ToString();
-                    objEjercicio.descripcion = reader["descripcion"].ToString();
-                    objEjercicio.repeticiones = int.Parse(reader["repeticiones"].ToString());
-                    objEjercicio.series = int.Parse(reader["series"].ToString());
-                    objEjercicio.peso = decimal.Parse(reader["peso"].ToString());
-                    objEjercicio.tiempo = DateTime.Parse(reader["tiempo"].ToString());
-                    objEjercicio.distancia = decimal.Parse(reader["distancia"].ToString());
-                    objEjercicio.descanso = decimal.Parse(reader["descanso"].ToString());
+                    ejercicios.Add(new Ejercicio()
+                    {
+                        id_ejercicio = int.Parse(reader["id_ejercicio"].ToString()),
+                        nombre_ejercicio = reader["nombre_ejercicio"].ToString(),
+                        descripcion = reader["descripcion"].ToString(),
+                        repeticiones = int.Parse(reader["repeticiones"].ToString()),
+                        series = int.Parse(reader["series"].ToString()),
+                        peso = decimal.Parse(reader["peso"].ToString()),
+                        tiempo = DateTime.Parse(reader["tiempo"].ToString()),
+                        distancia = decimal.Parse(reader["distancia"].ToString()),
+                        descanso = decimal.Parse(reader["descanso"].ToString())
+
+                    });
+
                 }
                 sqlConnection.Close();
             }
@@ -50,7 +59,7 @@ namespace MobilFit_API.Aplicacion
                 return null;
             }
 
-            return objEjercicio;
+            return ejercicios;
         }
     }
 }
