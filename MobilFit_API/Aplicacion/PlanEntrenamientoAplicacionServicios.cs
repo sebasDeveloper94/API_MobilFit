@@ -54,7 +54,7 @@ namespace MobilFit_API.Aplicacion
             return objPlanEntrenamiento;
         }
 
-        public int GuardarDiasRutinas(DiasEntrenamiento objDias)
+        public int GuardarDiasRutinas(int idPlan, int idRutina, int dia)
         {
             SqlConnection connection = new SqlConnection(this.connection);
             SqlCommand sqlCommand;
@@ -62,10 +62,7 @@ namespace MobilFit_API.Aplicacion
 
             int inserto = 0;
             string sql = string.Empty;
-            for (int i = 0; i < objDias.idRutinas.Count(); i++)
-            {
-                sql += string.Format(@"EXEC [dbo].[SP_GUARDAR_DIASRUTINAS] {0}, {1}, {2}", objDias.idPlan, objDias.idRutinas[i], objDias.dias[i]);
-            }
+            sql += string.Format(@"EXEC [dbo].[SP_GUARDAR_DIASRUTINAS] {0}, {1}, {2}", idPlan, idRutina, dia);
 
             try
             {

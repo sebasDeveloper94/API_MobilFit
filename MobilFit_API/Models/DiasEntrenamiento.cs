@@ -8,8 +8,8 @@ namespace MobilFit_API.Models
     public class DiasEntrenamiento
     {
         public int idPlan { get; set; }
-        public List<int> idRutinas { get; set; }
-        public List<int> dias { get; set; }
+        public int idRutinas { get; set; }
+        public int dia { get; set; }
         public DiasEntrenamiento()
         {
 
