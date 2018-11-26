@@ -40,6 +40,7 @@ namespace MobilFit_API.Aplicacion
                 {
                     id_rutina = int.Parse(reader["id_rutina"].ToString()),
                     nombre = reader["nombreRutina"].ToString(),
+                    meta = reader["meta"].ToString()
                 });
 
                 objPlanEntrenamiento.objPresional.idProfesional = int.Parse(reader["id_profesional"].ToString());
