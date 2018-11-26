@@ -34,17 +34,17 @@ namespace MobilFit_API.Controllers
 
         [AcceptVerbs("POST")]
         [HttpGet]
-        public string GuardarDias(int idPlan, int idRutina, int dia)
+        public IHttpActionResult GuardarDias(int idPlan, int idRutina, int dia)
         {
             PlanEntrenamientoAplicacionServicios planApp = new PlanEntrenamientoAplicacionServicios(conexionSQL.cadenaConexion);
             int guardado = planApp.GuardarDiasRutinas(idPlan, idRutina, dia);
             if (guardado > 0)
             {
-                return "ok";
+                return Ok(guardado);
             }
             else
             {
-                return "no";
+                return NotFound();
             }
         }
     }
