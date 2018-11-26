@@ -34,7 +34,7 @@ namespace MobilFit_API.Controllers
 
         [AcceptVerbs("POST")]
         [HttpGet]
-        public string GuardarDias(string jsonDias)
+        public IHttpActionResult GuardarDias(string jsonDias)
         {
             DiasEntrenamiento objDias = new DiasEntrenamiento();
             MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonDias));
@@ -46,16 +46,16 @@ namespace MobilFit_API.Controllers
                 int guardado = planApp.GuardarDiasRutinas(objDias);
                 if (guardado > 0)
                 {
-                    return "ok";
+                    return Ok(guardado);
                 }
                 else
                 {
-                    return "no";
+                    return NotFound();
                 }
             }
             else
             {
-                return "no";
+                return NotFound();
             }
         }
     }
