@@ -39,7 +39,7 @@ namespace MobilFit_API.Controllers
 
         [AcceptVerbs("POST")]
         [HttpGet]
-        public string Registrar(string jsonUsuario)
+        public IHttpActionResult Registrar(string jsonUsuario)
         {
             Usuario objUsuario = new Usuario();
             MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonUsuario));
@@ -51,16 +51,16 @@ namespace MobilFit_API.Controllers
                 int registro = loginApp.RegistrarUsuario(objUsuario);
                 if (registro > 0)
                 {
-                    return "ok";
+                    return Ok();
                 }
                 else
                 {
-                    return "no";
+                    return NotFound();
                 }
             }
             else
             {
-                return "no";
+                return NotFound();
             }
         }
     }
