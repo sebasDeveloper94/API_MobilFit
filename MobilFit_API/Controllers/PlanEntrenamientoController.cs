@@ -34,19 +34,19 @@ namespace MobilFit_API.Controllers
 
         [AcceptVerbs("POST")]
         [HttpGet]
-        public IHttpActionResult GuardarDias(DiasEntrenamiento objDias)
+        public IHttpActionResult GuardarDias(string jsonDias)
         {
-            //DiasEntrenamiento objDias = new DiasEntrenamiento();
-            //MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonDias));
-            //DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(DiasEntrenamiento));
-            //objDias = serializer.ReadObject(ms) as DiasEntrenamiento;
+            DiasEntrenamiento objDias = new DiasEntrenamiento();
+            MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonDias));
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(DiasEntrenamiento));
+            objDias = serializer.ReadObject(ms) as DiasEntrenamiento;
             if (objDias != null)
             {
                 PlanEntrenamientoAplicacionServicios planApp = new PlanEntrenamientoAplicacionServicios(conexionSQL.cadenaConexion);
                 int guardado = planApp.GuardarDiasRutinas(objDias);
                 if (guardado > 0)
                 {
-                    return Ok(guardado);
+                    return Ok();
                 }
                 else
                 {
