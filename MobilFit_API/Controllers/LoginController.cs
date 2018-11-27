@@ -33,7 +33,7 @@ namespace MobilFit_API.Controllers
             }
             else
             {
-                return NotFound();
+                return Ok(id);
             }
         }
 
