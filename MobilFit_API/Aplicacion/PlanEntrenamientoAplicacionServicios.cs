@@ -22,7 +22,7 @@ namespace MobilFit_API.Aplicacion
             SqlDataReader reader;
             PlanEntrenamiento objPlanEntrenamiento = new PlanEntrenamiento();
             string sql = string.Empty;
-            sql = "EXEC [dbo].[SP_TRAER_PLAN] " + id_usuario;
+            sql = @"EXEC [dbo].[SP_TRAER_PLAN] " + id_usuario;
 
             sqlCommand = new SqlCommand(sql, connection);
             connection.Open();
@@ -48,7 +48,29 @@ namespace MobilFit_API.Aplicacion
                 objPlanEntrenamiento.objPresional.nombre = reader["nombreProfesional"].ToString();
                 objPlanEntrenamiento.objPresional.email = reader["email"].ToString(); 
                 objPlanEntrenamiento.objUsuario.id_usuario = int.Parse(reader["ID_USUARIO"].ToString());
-                objPlanEntrenamiento.id_planUsuario = int.Parse(reader["id_planUsuario"].ToString());
+                
+            }
+            connection.Close();
+            connection.Open();
+            sql = string.Empty;
+            sql += string.Format(@"DECLARE @ULTIMO_ID INT
+                    IF NOT EXISTS(SELECT * FROM Plan_Usuario WHERE id_usuario = {0} AND id_plan_entrenamiento = {1})
+                    BEGIN
+	                    INSERT INTO Plan_Usuario (id_plan_entrenamiento, id_usuario) VALUES ({1}, {0})
+	                    (SELECT @ULTIMO_ID = SCOPE_IDENTITY())
+	                    SELECT @ULTIMO_ID  AS id_plan_usuario
+                    END
+                    ELSE
+                    BEGIN
+	                    SELECT PU.id_plan_usuario FROM Plan_Usuario PU WHERE id_usuario = {0} AND id_plan_entrenamiento = {1}
+                    END", objPlanEntrenamiento.objUsuario.id_usuario, objPlanEntrenamiento.idPlan);
+
+            sqlCommand = new SqlCommand(sql, connection);
+            reader = sqlCommand.ExecuteReader();
+
+            while (reader.Read())
+            {
+                objPlanEntrenamiento.id_planUsuario = int.Parse(reader["id_plan_usuario"].ToString());
             }
             connection.Close();
             return objPlanEntrenamiento;
