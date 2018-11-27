@@ -17,14 +17,14 @@ namespace MobilFit_API.Aplicacion
             this.connection = connection;
         }
         //metodos
-        public int Acceso(string email, string contraseña)
+        public int Acceso(string email, string password)
         {
             SqlConnection connection = new SqlConnection(this.connection);
             SqlCommand sqlCommand;
             SqlDataReader reader;
             int idUsuario = 0;
             string sql = string.Empty;
-            sql = string.Format("SELECT * FROM Usuario WHERE email = '{0}' AND Contraseña = '{1}'", email, contraseña);
+            sql = string.Format("SELECT * FROM Usuario WHERE email = '{0}' AND Contraseña = '{1}'", email, password);
 
             sqlCommand = new SqlCommand(sql, connection);
             connection.Open();

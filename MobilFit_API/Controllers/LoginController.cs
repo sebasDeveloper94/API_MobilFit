@@ -23,10 +23,10 @@ namespace MobilFit_API.Controllers
 
         [AcceptVerbs("GET")]
         [HttpGet]
-        public IHttpActionResult Login(string email, string contraseña) {
+        public IHttpActionResult Login(string email, string password) {
 
             LoginAplicacionServicios loginApp = new LoginAplicacionServicios(conexionSQL.cadenaConexion);
-            int id = loginApp.Acceso(email, contraseña);
+            int id = loginApp.Acceso(email, password);
             if (id > 0)
             {
                 return Ok(id);
