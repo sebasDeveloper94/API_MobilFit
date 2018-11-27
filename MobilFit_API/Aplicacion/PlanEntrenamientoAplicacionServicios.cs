@@ -46,9 +46,9 @@ namespace MobilFit_API.Aplicacion
                 objPlanEntrenamiento.objPresional.idProfesional = int.Parse(reader["id_profesional"].ToString());
                 objPlanEntrenamiento.objPresional.profesion = reader["profesion"].ToString();
                 objPlanEntrenamiento.objPresional.nombre = reader["nombreProfesional"].ToString();
-                objPlanEntrenamiento.objPresional.email = reader["email"].ToString();
-
+                objPlanEntrenamiento.objPresional.email = reader["email"].ToString(); 
                 objPlanEntrenamiento.objUsuario.id_usuario = int.Parse(reader["ID_USUARIO"].ToString());
+                objPlanEntrenamiento.id_planUsuario = int.Parse(reader["id_planUsuario"].ToString());
             }
             connection.Close();
             return objPlanEntrenamiento;

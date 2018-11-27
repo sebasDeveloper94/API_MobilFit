@@ -16,6 +16,7 @@ namespace MobilFit_API.Models
         public Profesional objPresional { get; set; }
         public List<Rutina> rutinasPlan { get; set; }
         public Usuario objUsuario { get; set; }
+        public int id_planUsuario { get; set; }
         public PlanEntrenamiento()
         {
 
