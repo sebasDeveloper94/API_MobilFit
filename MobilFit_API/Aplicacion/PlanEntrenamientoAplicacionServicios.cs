@@ -31,6 +31,7 @@ namespace MobilFit_API.Aplicacion
             objPlanEntrenamiento.rutinasPlan = new List<Rutina>();
             objPlanEntrenamiento.objPresional = new Profesional();
             objPlanEntrenamiento.objUsuario = new Usuario();
+            objPlanEntrenamiento.DiasEntrenamiento = new DiasEntrenamiento();
             while (reader.Read())
             {
                 objPlanEntrenamiento.idPlan = int.Parse(reader["id_plan_entrenamiento"].ToString());
@@ -49,6 +50,8 @@ namespace MobilFit_API.Aplicacion
                 objPlanEntrenamiento.objPresional.email = reader["email"].ToString();
                 objPlanEntrenamiento.objUsuario.id_usuario = int.Parse(reader["ID_USUARIO"].ToString());
 
+                objPlanEntrenamiento.DiasEntrenamiento.dia = int.Parse(reader["dia"].ToString());
+                objPlanEntrenamiento.DiasEntrenamiento.idRutina = int.Parse(reader["id_rutina"].ToString());
             }
             connection.Close();
             connection.Open();
