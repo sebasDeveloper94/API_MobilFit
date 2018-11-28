@@ -66,13 +66,13 @@ namespace MobilFit_API.Controllers
         public IHttpActionResult VerDiaRutina(int idRutina)
         {
             PlanEntrenamientoAplicacionServicios planApp = new PlanEntrenamientoAplicacionServicios(conexionSQL.cadenaConexion);
-            DiasEntrenamiento objDia= new DiasEntrenamiento();
-            objDia = planApp.VerDiaSeleccionado(idRutina);
-            if (objDia == null)
+            RutinaSeleccionada rutinaSeleccionada = new RutinaSeleccionada();
+            rutinaSeleccionada = planApp.VerDiaSeleccionado(idRutina);
+            if (rutinaSeleccionada == null)
             {
                 return NotFound();
             }
-            return Ok(objDia);
+            return Ok(rutinaSeleccionada);
         }
 
         [AcceptVerbs("GET")]

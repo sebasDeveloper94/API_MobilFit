@@ -101,27 +101,37 @@ namespace MobilFit_API.Aplicacion
             return inserto;
         }
 
-        public DiasEntrenamiento VerDiaSeleccionado(int idRutina)
+        public RutinaSeleccionada VerDiaSeleccionado(int idRutina)
         {
             SqlConnection sqlConnection = new SqlConnection(this.connection);
             SqlCommand sqlCommand;
             SqlDataReader reader;
-            DiasEntrenamiento objDia = new DiasEntrenamiento();
+            RutinaSeleccionada rutinaSeleccionada;
             string sql = string.Empty;
-            sql = "SELECT * FROM Dias_Rutina WHERE id_rutina =" + idRutina;
+            sql = "SELECT DR.id_plan_usuario, DR.id_rutina, DR.dia, E.nombre_ejercicio, E.descripcion"+
+                   "FROM Dias_Rutina DR"+
+                   "INNER JOIN Ejercicio_Rutina ER ON ER.id_rutina = DR.id_rutina"+
+                   "INNER JOIN Ejercicio E ON E.id_ejercicio = ER.id_ejercicio+"+
+                   "WHERE DR.id_rutina = " + idRutina;
 
             sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlConnection.Open();
             reader = sqlCommand.ExecuteReader();
+            rutinaSeleccionada = new RutinaSeleccionada();
+            rutinaSeleccionada.Ejercicios = new List<Ejercicio>();
             while (reader.Read())
             {
-                objDia.idPlan = int.Parse(reader["id_plan_usuario"].ToString());
-                objDia.idRutina = int.Parse(reader["id_rutina"].ToString());
-                objDia.dia = int.Parse(reader["dia"].ToString());
+                rutinaSeleccionada.DiaEntrenamientos.idPlan = int.Parse(reader["id_plan_usuario"].ToString());
+                rutinaSeleccionada.DiaEntrenamientos.idRutina = int.Parse(reader["id_rutina"].ToString());
+                rutinaSeleccionada.DiaEntrenamientos.dia = int.Parse(reader["dia"].ToString());
+                rutinaSeleccionada.Ejercicios.Add(new Ejercicio() {
+                    nombre_ejercicio = reader["nombre_ejercicio"].ToString(),
+                    descripcion = reader["descripcion"].ToString()
+                });
             }
             sqlConnection.Close();
 
-            return objDia;
+            return rutinaSeleccionada;
         }
 
         public List<DiasEntrenamiento> VerDiasSeleccionados(int idPlanUsuario)
