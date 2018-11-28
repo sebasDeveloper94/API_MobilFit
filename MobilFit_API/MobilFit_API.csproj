@@ -211,6 +211,7 @@
     <Compile Include="Models\Profesional.cs" />
     <Compile Include="Models\ReporteDesempeño.cs" />
     <Compile Include="Models\Rutina.cs" />
+    <Compile Include="Models\RutinaSeleccionada.cs" />
     <Compile Include="Models\Tips.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Persistencia\conexionSQL.cs" />

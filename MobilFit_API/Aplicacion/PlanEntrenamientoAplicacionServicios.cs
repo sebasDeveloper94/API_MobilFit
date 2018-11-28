@@ -109,15 +109,16 @@ namespace MobilFit_API.Aplicacion
             RutinaSeleccionada rutinaSeleccionada;
             string sql = string.Empty;
             sql = "SELECT DR.id_plan_usuario, DR.id_rutina, DR.dia, E.nombre_ejercicio, E.descripcion"+
-                   "FROM Dias_Rutina DR"+
-                   "INNER JOIN Ejercicio_Rutina ER ON ER.id_rutina = DR.id_rutina"+
-                   "INNER JOIN Ejercicio E ON E.id_ejercicio = ER.id_ejercicio+"+
-                   "WHERE DR.id_rutina = " + idRutina;
+                   " FROM Dias_Rutina DR "+
+                   " INNER JOIN Ejercicio_Rutina ER ON ER.id_rutina = DR.id_rutina"+
+                   " INNER JOIN Ejercicio E ON E.id_ejercicio = ER.id_ejercicio"+
+                   " WHERE DR.id_rutina = " + idRutina;
 
             sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlConnection.Open();
             reader = sqlCommand.ExecuteReader();
             rutinaSeleccionada = new RutinaSeleccionada();
+            rutinaSeleccionada.DiaEntrenamientos = new DiasEntrenamiento();
             rutinaSeleccionada.Ejercicios = new List<Ejercicio>();
             while (reader.Read())
             {
