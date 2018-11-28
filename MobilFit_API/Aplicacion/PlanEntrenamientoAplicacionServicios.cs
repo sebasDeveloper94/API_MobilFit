@@ -31,7 +31,7 @@ namespace MobilFit_API.Aplicacion
             objPlanEntrenamiento.rutinasPlan = new List<Rutina>();
             objPlanEntrenamiento.objPresional = new Profesional();
             objPlanEntrenamiento.objUsuario = new Usuario();
-            objPlanEntrenamiento.DiasEntrenamiento = new DiasEntrenamiento();
+            objPlanEntrenamiento.DiasEntrenamiento = new List<DiasEntrenamiento>();
             while (reader.Read())
             {
                 objPlanEntrenamiento.idPlan = int.Parse(reader["id_plan_entrenamiento"].ToString());
@@ -50,8 +50,11 @@ namespace MobilFit_API.Aplicacion
                 objPlanEntrenamiento.objPresional.email = reader["email"].ToString();
                 objPlanEntrenamiento.objUsuario.id_usuario = int.Parse(reader["ID_USUARIO"].ToString());
 
-                objPlanEntrenamiento.DiasEntrenamiento.dia = int.Parse(reader["dia"].ToString());
-                objPlanEntrenamiento.DiasEntrenamiento.idRutina = int.Parse(reader["id_rutina"].ToString());
+                objPlanEntrenamiento.DiasEntrenamiento.Add(new DiasEntrenamiento()
+                {
+                    dia = int.Parse(reader["dia"].ToString()),
+                    idRutina = int.Parse(reader["id_rutina"].ToString())
+                });
             }
             connection.Close();
             connection.Open();
@@ -111,10 +114,10 @@ namespace MobilFit_API.Aplicacion
             SqlDataReader reader;
             RutinaSeleccionada rutinaSeleccionada;
             string sql = string.Empty;
-            sql = "SELECT DR.id_plan_usuario, DR.id_rutina, DR.dia, E.nombre_ejercicio, E.descripcion"+
-                   " FROM Dias_Rutina DR "+
-                   " INNER JOIN Ejercicio_Rutina ER ON ER.id_rutina = DR.id_rutina"+
-                   " INNER JOIN Ejercicio E ON E.id_ejercicio = ER.id_ejercicio"+
+            sql = "SELECT DR.id_plan_usuario, DR.id_rutina, DR.dia, E.nombre_ejercicio, E.descripcion" +
+                   " FROM Dias_Rutina DR " +
+                   " INNER JOIN Ejercicio_Rutina ER ON ER.id_rutina = DR.id_rutina" +
+                   " INNER JOIN Ejercicio E ON E.id_ejercicio = ER.id_ejercicio" +
                    " WHERE DR.id_rutina = " + idRutina;
 
             sqlCommand = new SqlCommand(sql, sqlConnection);
@@ -128,7 +131,8 @@ namespace MobilFit_API.Aplicacion
                 rutinaSeleccionada.DiaEntrenamientos.idPlan = int.Parse(reader["id_plan_usuario"].ToString());
                 rutinaSeleccionada.DiaEntrenamientos.idRutina = int.Parse(reader["id_rutina"].ToString());
                 rutinaSeleccionada.DiaEntrenamientos.dia = int.Parse(reader["dia"].ToString());
-                rutinaSeleccionada.Ejercicios.Add(new Ejercicio() {
+                rutinaSeleccionada.Ejercicios.Add(new Ejercicio()
+                {
                     nombre_ejercicio = reader["nombre_ejercicio"].ToString(),
                     descripcion = reader["descripcion"].ToString()
                 });
