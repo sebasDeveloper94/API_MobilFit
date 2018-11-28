@@ -20,6 +20,8 @@ namespace MobilFit_API.Controllers
 
         }
 
+        [AcceptVerbs("GET")]
+        [HttpGet]
         public IHttpActionResult GetPlanUsuario(int id_usuario)
         {
             PlanEntrenamientoAplicacionServicios planApp = new PlanEntrenamientoAplicacionServicios(conexionSQL.cadenaConexion);
@@ -57,6 +59,34 @@ namespace MobilFit_API.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [AcceptVerbs("GET")]
+        [HttpGet]
+        public IHttpActionResult VerDiaRutina(int idRutina)
+        {
+            PlanEntrenamientoAplicacionServicios planApp = new PlanEntrenamientoAplicacionServicios(conexionSQL.cadenaConexion);
+            DiasEntrenamiento objDia= new DiasEntrenamiento();
+            objDia = planApp.VerDiaSeleccionado(idRutina);
+            if (objDia == null)
+            {
+                return NotFound();
+            }
+            return Ok(objDia);
+        }
+
+        [AcceptVerbs("GET")]
+        [HttpGet]
+        public IHttpActionResult VerDiaSeleccionados(int idPlanUsuario)
+        {
+            PlanEntrenamientoAplicacionServicios planApp = new PlanEntrenamientoAplicacionServicios(conexionSQL.cadenaConexion);
+            List<DiasEntrenamiento> listDias = new List<DiasEntrenamiento>();
+            listDias = planApp.VerDiasSeleccionados(idPlanUsuario);
+            if (listDias == null)
+            {
+                return NotFound();
+            }
+            return Ok(listDias);
         }
     }
 }

@@ -46,9 +46,9 @@ namespace MobilFit_API.Aplicacion
                 objPlanEntrenamiento.objPresional.idProfesional = int.Parse(reader["id_profesional"].ToString());
                 objPlanEntrenamiento.objPresional.profesion = reader["profesion"].ToString();
                 objPlanEntrenamiento.objPresional.nombre = reader["nombreProfesional"].ToString();
-                objPlanEntrenamiento.objPresional.email = reader["email"].ToString(); 
+                objPlanEntrenamiento.objPresional.email = reader["email"].ToString();
                 objPlanEntrenamiento.objUsuario.id_usuario = int.Parse(reader["ID_USUARIO"].ToString());
-                
+
             }
             connection.Close();
             connection.Open();
@@ -99,6 +99,56 @@ namespace MobilFit_API.Aplicacion
                 return 0;
             }
             return inserto;
+        }
+
+        public DiasEntrenamiento VerDiaSeleccionado(int idRutina)
+        {
+            SqlConnection sqlConnection = new SqlConnection(this.connection);
+            SqlCommand sqlCommand;
+            SqlDataReader reader;
+            DiasEntrenamiento objDia = new DiasEntrenamiento();
+            string sql = string.Empty;
+            sql = "SELECT * FROM Dias_Rutina WHERE id_rutina =" + idRutina;
+
+            sqlCommand = new SqlCommand(sql, sqlConnection);
+            sqlConnection.Open();
+            reader = sqlCommand.ExecuteReader();
+            while (reader.Read())
+            {
+                objDia.idPlan = int.Parse(reader["id_plan_usuario"].ToString());
+                objDia.idRutina = int.Parse(reader["id_rutina"].ToString());
+                objDia.dia = int.Parse(reader["dia"].ToString());
+            }
+            sqlConnection.Close();
+
+            return objDia;
+        }
+
+        public List<DiasEntrenamiento> VerDiasSeleccionados(int idPlanUsuario)
+        {
+            SqlConnection sqlConnection = new SqlConnection(this.connection);
+            SqlCommand sqlCommand;
+            SqlDataReader reader;
+            List<DiasEntrenamiento> listDias;
+            string sql = string.Empty;
+            sql = "SELECT * FROM Dias_Rutina WHERE id_plan_usuario =" + idPlanUsuario;
+
+            sqlCommand = new SqlCommand(sql, sqlConnection);
+            sqlConnection.Open();
+            reader = sqlCommand.ExecuteReader();
+            listDias = new List<DiasEntrenamiento>();
+            while (reader.Read())
+            {
+                listDias.Add(new DiasEntrenamiento()
+                {
+                    idPlan = int.Parse(reader["id_plan_usuario"].ToString()),
+                    idRutina = int.Parse(reader["id_rutina"].ToString()),
+                    dia = int.Parse(reader["dia"].ToString())
+                });
+            }
+            sqlConnection.Close();
+
+            return listDias;
         }
     }
 }
