@@ -86,7 +86,7 @@ namespace MobilFit_API.Aplicacion
                 objUsuario.nombre = reader["nombre"].ToString();
                 objUsuario.apellido_paterno = reader["apellido_paterno"].ToString();
                 objUsuario.apellido_materno = reader["apellido_materno"].ToString();
-                objUsuario.sexo = int.Parse(reader["sexo"].ToString());
+                objUsuario.sexo = reader["sexo"].ToString() == "True" ? 1 : 0;
                 objUsuario.email = reader["email"].ToString();
                 objUsuario.contraseña = reader["contraseña"].ToString();
                 objUsuario.fechaRegistro = DateTime.Parse(reader["fecha_registro"].ToString());
@@ -150,7 +150,7 @@ namespace MobilFit_API.Aplicacion
                 objUsuario.nombre = reader["nombre"].ToString();
                 objUsuario.apellido_paterno = reader["apellido_paterno"].ToString();
                 objUsuario.apellido_materno = reader["apellido_materno"].ToString();
-                objUsuario.sexo = int.Parse(reader["sexo"].ToString());
+                objUsuario.sexo = reader["sexo"].ToString() == "True" ? 1 : 0;
                 objUsuario.email = reader["email"].ToString();
                 objUsuario.contraseña = reader["contraseña"].ToString();
                 objUsuario.fechaRegistro = DateTime.Parse(reader["fecha_registro"].ToString());
