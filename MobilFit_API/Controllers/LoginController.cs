@@ -27,9 +27,10 @@ namespace MobilFit_API.Controllers
         {
 
             LoginAplicacionServicios loginApp = new LoginAplicacionServicios(conexionSQL.cadenaConexion);
-            int id = loginApp.Acceso(email, password);
+            Usuario usuario = new Usuario();
+            usuario = loginApp.Acceso(email, password);
 
-            return Ok(id);
+            return Ok(usuario);
         }
 
         [AcceptVerbs("POST")]
@@ -43,14 +44,15 @@ namespace MobilFit_API.Controllers
             if (objUsuario != null)
             {
                 LoginAplicacionServicios loginApp = new LoginAplicacionServicios(conexionSQL.cadenaConexion);
-                int idUsuario = loginApp.RegistrarUsuario(objUsuario);
-                if (idUsuario > 0)
+                Usuario usuario = new Usuario();
+                usuario = loginApp.RegistrarUsuario(objUsuario);
+                if (usuario != null && usuario.id_usuario > 0)
                 {
-                    return Ok(idUsuario);
+                    return Ok(usuario);
                 }
                 else
                 {
-                    return NotFound();
+                    return Ok();
                 }
             }
             else
@@ -68,6 +70,28 @@ namespace MobilFit_API.Controllers
             int id = loginApp.ValidarUsuario(email);
 
             return Ok(id);
+        }
+        [AcceptVerbs("PUT")]
+        [HttpGet]
+        public IHttpActionResult EditarUsuario(int idUsuario, string jsonUsuario)
+        {
+            Usuario objUsuario = new Usuario();
+            MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonUsuario));
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Usuario));
+            objUsuario = serializer.ReadObject(ms) as Usuario;
+
+            LoginAplicacionServicios loginApp = new LoginAplicacionServicios(conexionSQL.cadenaConexion);
+            Usuario usuario = new Usuario();
+            usuario = loginApp.Editar(idUsuario, objUsuario);
+            if (usuario != null && usuario.id_usuario > 0)
+            {
+                return Ok(usuario);
+            }
+            else
+            {
+                return Ok();
+            }
+
         }
     }
 }
