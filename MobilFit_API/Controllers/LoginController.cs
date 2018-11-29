@@ -63,5 +63,22 @@ namespace MobilFit_API.Controllers
                 return NotFound();
             }
         }
+
+        [AcceptVerbs("GET")]
+        [HttpGet]
+        public IHttpActionResult ValidaUsuario(string email)
+        {
+
+            LoginAplicacionServicios loginApp = new LoginAplicacionServicios(conexionSQL.cadenaConexion);
+            int id = loginApp.ValidarUsuario(email);
+            if (id > 0)
+            {
+                return Ok(id);
+            }
+            else
+            {
+                return Ok(id);
+            }
+        }
     }
 }

@@ -71,5 +71,26 @@ namespace MobilFit_API.Aplicacion
             }
             return idUsuario;
         }
+
+        public int ValidarUsuario(string email)
+        {
+            SqlConnection connection = new SqlConnection(this.connection);
+            SqlCommand sqlCommand;
+            SqlDataReader reader;
+            int idUsuario = 0;
+            string sql = string.Empty;
+            sql = string.Format("SELECT * FROM Usuario WHERE email = '{0}'", email);
+
+            sqlCommand = new SqlCommand(sql, connection);
+            connection.Open();
+            reader = sqlCommand.ExecuteReader();
+            while (reader.Read())
+            {
+                idUsuario = int.Parse(reader["id_usuario"].ToString());
+            }
+            connection.Close();
+
+            return idUsuario;
+        }
     }
 }
