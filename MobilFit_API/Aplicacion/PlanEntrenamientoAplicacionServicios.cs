@@ -31,7 +31,7 @@ namespace MobilFit_API.Aplicacion
             objPlanEntrenamiento.rutinasPlan = new List<Rutina>();
             objPlanEntrenamiento.objPresional = new Profesional();
             objPlanEntrenamiento.objUsuario = new Usuario();
-            objPlanEntrenamiento.DiasEntrenamiento = new List<DiasEntrenamiento>();
+
             while (reader.Read())
             {
                 objPlanEntrenamiento.idPlan = int.Parse(reader["id_plan_entrenamiento"].ToString());
@@ -49,12 +49,6 @@ namespace MobilFit_API.Aplicacion
                 objPlanEntrenamiento.objPresional.nombre = reader["nombreProfesional"].ToString();
                 objPlanEntrenamiento.objPresional.email = reader["email"].ToString();
                 objPlanEntrenamiento.objUsuario.id_usuario = int.Parse(reader["ID_USUARIO"].ToString());
-
-                objPlanEntrenamiento.DiasEntrenamiento.Add(new DiasEntrenamiento()
-                {
-                    dia = int.Parse(reader["dia"].ToString()),
-                    idRutina = int.Parse(reader["id_rutina"].ToString())
-                });
             }
             connection.Close();
             connection.Open();
@@ -107,18 +101,26 @@ namespace MobilFit_API.Aplicacion
             return inserto;
         }
 
-        public RutinaSeleccionada VerDiaSeleccionado(int idRutina)
+        public RutinaSeleccionada VerDiaSeleccionado(int idRutina, int idPlanUsuario)
         {
             SqlConnection sqlConnection = new SqlConnection(this.connection);
             SqlCommand sqlCommand;
             SqlDataReader reader;
             RutinaSeleccionada rutinaSeleccionada;
             string sql = string.Empty;
-            sql = "SELECT DR.id_plan_usuario, DR.id_rutina, DR.dia, E.nombre_ejercicio, E.descripcion" +
-                   " FROM Dias_Rutina DR " +
-                   " INNER JOIN Ejercicio_Rutina ER ON ER.id_rutina = DR.id_rutina" +
-                   " INNER JOIN Ejercicio E ON E.id_ejercicio = ER.id_ejercicio" +
-                   " WHERE DR.id_rutina = " + idRutina;
+            sql = "IF EXISTS(SELECT * FROM Dias_Rutina WHERE id_plan_usuario = "+idPlanUsuario+" AND id_rutina = "+idRutina+") "+
+                   "BEGIN "+
+                        "SELECT DR.id_plan_usuario, DR.id_rutina, DR.dia, E.nombre_ejercicio, E.descripcion "+
+                        "FROM Dias_Rutina DR "+
+                        "INNER JOIN Ejercicio_Rutina ER ON ER.id_rutina = DR.id_rutina "+
+                        "INNER JOIN Ejercicio E ON E.id_ejercicio = ER.id_ejercicio "+
+                        "WHERE DR.id_rutina =" + idRutina + 
+                    " END"+ 
+                    " ELSE"+ 
+                        " BEGIN "+
+                            " INSERT INTO Dias_Rutina(dia, id_rutina, id_plan_usuario) VALUES(0, "+idRutina+", "+idPlanUsuario+") "+
+                            " SELECT * FROM Dias_Rutina WHERE id_rutina = "+idRutina+" "+
+                        " END";
 
             sqlCommand = new SqlCommand(sql, sqlConnection);
             sqlConnection.Open();
@@ -151,20 +153,33 @@ namespace MobilFit_API.Aplicacion
             string sql = string.Empty;
             sql = "SELECT * FROM Dias_Rutina WHERE id_plan_usuario =" + idPlanUsuario;
 
-            sqlCommand = new SqlCommand(sql, sqlConnection);
-            sqlConnection.Open();
-            reader = sqlCommand.ExecuteReader();
-            listDias = new List<DiasEntrenamiento>();
-            while (reader.Read())
+            try
             {
-                listDias.Add(new DiasEntrenamiento()
+                sqlCommand = new SqlCommand(sql, sqlConnection);
+                sqlConnection.Open();
+                reader = sqlCommand.ExecuteReader();
+                listDias = new List<DiasEntrenamiento>();
+                while (reader.Read())
                 {
-                    idPlan = int.Parse(reader["id_plan_usuario"].ToString()),
-                    idRutina = int.Parse(reader["id_rutina"].ToString()),
-                    dia = int.Parse(reader["dia"].ToString())
-                });
+                    listDias.Add(new DiasEntrenamiento()
+                    {
+                        idPlan = int.Parse(reader["id_plan_usuario"].ToString()),
+                        idRutina = int.Parse(reader["id_rutina"].ToString()),
+                        dia = int.Parse(reader["dia"].ToString())
+                    });
+                }
+
+                if (listDias.Count() == 0)
+                {
+                    return null;
+                }
+
+                sqlConnection.Close();
             }
-            sqlConnection.Close();
+            catch (Exception)
+            {
+                return null;
+            }
 
             return listDias;
         }

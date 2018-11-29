@@ -48,10 +48,10 @@ namespace MobilFit_API.Controllers
             if (objUsuario != null)
             {
                 LoginAplicacionServicios loginApp = new LoginAplicacionServicios(conexionSQL.cadenaConexion);
-                int registro = loginApp.RegistrarUsuario(objUsuario);
-                if (registro > 0)
+                int idUsuario = loginApp.RegistrarUsuario(objUsuario);
+                if (idUsuario > 0)
                 {
-                    return Ok();
+                    return Ok(idUsuario);
                 }
                 else
                 {

@@ -43,7 +43,7 @@ namespace MobilFit_API.Aplicacion
             SqlCommand sqlCommand;
             SqlDataReader reader;
 
-            int inserto = 0;
+            int idUsuario = 0;
             DateTime fecha = objUsuario.fechaRegistro.ToString("dd-MM-yyyy") == "01-01-0001" ? DateTime.Parse("01-01-1900") : objUsuario.fechaRegistro;
             string sql = string.Empty;
             sql += @"DECLARE @ULTIMO_ID INT
@@ -52,20 +52,24 @@ namespace MobilFit_API.Aplicacion
                                     ", " + objUsuario.sexo + ", '" + objUsuario.email + "', '" + objUsuario.contraseña + "', '" + fecha + "'," +
                                     "" + objUsuario.peso + ", " + objUsuario.altura + ", " + objUsuario.id_tipoCuerpo + ", " + objUsuario.id_nivel + ")" +
                                     "(SELECT @ULTIMO_ID = scope_identity())" +//Rescata el utlimo ID_usuario insertado para insertarlo en las tablas de relacionadas al usuario
-                                    "INSERT INTO Usuario_Objetivo (id_objetivo, id_usuario) VALUES (" + objUsuario.id_objetivo + ", @ULTIMO_ID)";
+                                    "INSERT INTO Usuario_Objetivo (id_objetivo, id_usuario) VALUES (" + objUsuario.id_objetivo + ", @ULTIMO_ID) "+
+                                    "SELECT @ULTIMO_ID AS id_usuario";
             try
             {
                 sqlCommand = new SqlCommand(sql, connection);
                 connection.Open();
                 reader = sqlCommand.ExecuteReader();
-                inserto = reader.RecordsAffected;
+                while (reader.Read())
+                {
+                    idUsuario = int.Parse(reader["id_usuario"].ToString());
+                }
                 connection.Close();
             }
             catch (Exception ex)
             {
                 return 0;
             }
-            return inserto;
+            return idUsuario;
         }
     }
 }

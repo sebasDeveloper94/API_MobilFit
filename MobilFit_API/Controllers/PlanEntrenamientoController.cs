@@ -63,11 +63,11 @@ namespace MobilFit_API.Controllers
 
         [AcceptVerbs("GET")]
         [HttpGet]
-        public IHttpActionResult VerDiaRutina(int idRutina)
+        public IHttpActionResult VerDiaRutina(int idRutina, int idPlanUsuario)
         {
             PlanEntrenamientoAplicacionServicios planApp = new PlanEntrenamientoAplicacionServicios(conexionSQL.cadenaConexion);
             RutinaSeleccionada rutinaSeleccionada = new RutinaSeleccionada();
-            rutinaSeleccionada = planApp.VerDiaSeleccionado(idRutina);
+            rutinaSeleccionada = planApp.VerDiaSeleccionado(idRutina, idPlanUsuario);
             if (rutinaSeleccionada == null)
             {
                 return NotFound();
