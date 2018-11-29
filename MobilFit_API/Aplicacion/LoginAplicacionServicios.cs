@@ -24,7 +24,11 @@ namespace MobilFit_API.Aplicacion
             SqlDataReader reader;
             Usuario objUsuario;
             string sql = string.Empty;
-            sql = string.Format("SELECT * FROM Usuario WHERE email = '{0}' AND Contraseña = '{1}'", email, password);
+            sql = @"SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,
+                    U.id_tipocuerpo, U.id_nivel, UO.id_objetivo
+                    FROM Usuario U 
+                    INNER JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario
+                    WHERE U.email =  '"+email+"' and contraseña = '"+password+"'";
 
             sqlCommand = new SqlCommand(sql, connection);
             connection.Open();
@@ -36,7 +40,7 @@ namespace MobilFit_API.Aplicacion
                 objUsuario.nombre = reader["nombre"].ToString();
                 objUsuario.apellido_paterno = reader["apellido_paterno"].ToString();
                 objUsuario.apellido_materno = reader["apellido_materno"].ToString();
-                objUsuario.sexo = int.Parse(reader["sexo"].ToString());
+                objUsuario.sexo = reader["sexo"].ToString() == "True" ? 1 : 0;
                 objUsuario.email = reader["email"].ToString();
                 objUsuario.contraseña = reader["contraseña"].ToString();
                 objUsuario.fechaRegistro = DateTime.Parse(reader["fecha_registro"].ToString());
@@ -66,7 +70,7 @@ namespace MobilFit_API.Aplicacion
                                     "" + usuario.peso + ", " + usuario.altura + ", " + usuario.id_tipoCuerpo + ", " + usuario.id_nivel + ")" +
                                     "(SELECT @ULTIMO_ID = scope_identity())" +//Rescata el utlimo ID_usuario insertado para insertarlo en las tablas de relacionadas al usuario
                                     "INSERT INTO Usuario_Objetivo (id_objetivo, id_usuario) VALUES (" + usuario.id_objetivo + ", @ULTIMO_ID) " +
-                                    "SELECT U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura," +
+                                    "SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura," +
                                     " U.id_tipocuerpo, U.id_nivel, UO.id_objetivo" +
                                     " FROM Usuario U" +
                                     " INNER JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario" +
@@ -130,7 +134,7 @@ namespace MobilFit_API.Aplicacion
 
                 "UPDATE Usuario_Objetivo SET id_objetivo = " + usuario.id_objetivo + " WHERE id_usuario = " + id + "  " +
 
-                "SELECT U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura, " +
+                "SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura, " +
                 "U.id_tipocuerpo, U.id_nivel, UO.id_objetivo " +
                 "FROM Usuario U " +
                 "INNER JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario " +
