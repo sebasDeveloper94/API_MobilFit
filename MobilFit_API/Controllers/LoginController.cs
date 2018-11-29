@@ -23,18 +23,13 @@ namespace MobilFit_API.Controllers
 
         [AcceptVerbs("GET")]
         [HttpGet]
-        public IHttpActionResult Login(string email, string password) {
+        public IHttpActionResult Login(string email, string password)
+        {
 
             LoginAplicacionServicios loginApp = new LoginAplicacionServicios(conexionSQL.cadenaConexion);
             int id = loginApp.Acceso(email, password);
-            if (id > 0)
-            {
-                return Ok(id);
-            }
-            else
-            {
-                return Ok(id);
-            }
+
+            return Ok(id);
         }
 
         [AcceptVerbs("POST")]
@@ -71,14 +66,8 @@ namespace MobilFit_API.Controllers
 
             LoginAplicacionServicios loginApp = new LoginAplicacionServicios(conexionSQL.cadenaConexion);
             int id = loginApp.ValidarUsuario(email);
-            if (id > 0)
-            {
-                return Ok(id);
-            }
-            else
-            {
-                return Ok(id);
-            }
+
+            return Ok(id);
         }
     }
 }
