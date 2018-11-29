@@ -119,7 +119,11 @@ namespace MobilFit_API.Aplicacion
                     " ELSE"+ 
                         " BEGIN "+
                             " INSERT INTO Dias_Rutina(dia, id_rutina, id_plan_usuario) VALUES(0, "+idRutina+", "+idPlanUsuario+") "+
-                            " SELECT * FROM Dias_Rutina WHERE id_rutina = "+idRutina+" "+
+                            "SELECT DR.id_plan_usuario, DR.id_rutina, DR.dia, E.nombre_ejercicio, E.descripcion " +
+                            " FROM Dias_Rutina DR " +
+                            " INNER JOIN Ejercicio_Rutina ER ON ER.id_rutina = DR.id_rutina " +
+                            " INNER JOIN Ejercicio E ON E.id_ejercicio = ER.id_ejercicio " +
+                            " WHERE DR.id_rutina =" + idRutina +
                         " END";
 
             sqlCommand = new SqlCommand(sql, sqlConnection);
