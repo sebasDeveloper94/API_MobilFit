@@ -71,8 +71,8 @@ namespace MobilFit_API.Controllers
 
             return Ok(id);
         }
-        [AcceptVerbs("PUT")]
-        [HttpGet]
+
+        [HttpPut]
         public IHttpActionResult EditarUsuario(int idUsuario, string jsonUsuario)
         {
             Usuario objUsuario = new Usuario();
