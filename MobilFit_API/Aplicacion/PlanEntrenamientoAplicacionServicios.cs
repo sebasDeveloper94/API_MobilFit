@@ -56,7 +56,7 @@ namespace MobilFit_API.Aplicacion
             sql += string.Format(@"DECLARE @ULTIMO_ID INT
                     IF NOT EXISTS(SELECT * FROM Plan_Usuario WHERE id_usuario = {0} AND id_plan_entrenamiento = {1})
                     BEGIN
-	                    INSERT INTO Plan_Usuario (id_plan_entrenamiento, id_usuario) VALUES ({1}, {0})
+	                    INSERT INTO Plan_Usuario (id_plan_entrenamiento, id_usuario, plan_completado) VALUES ({1}, {0}, 0)
 	                    (SELECT @ULTIMO_ID = SCOPE_IDENTITY())
 	                    SELECT @ULTIMO_ID  AS id_plan_usuario
                     END
@@ -110,7 +110,7 @@ namespace MobilFit_API.Aplicacion
             string sql = string.Empty;
             sql = "IF EXISTS(SELECT * FROM Dias_Rutina WHERE id_plan_usuario = "+idPlanUsuario+" AND id_rutina = "+idRutina+") "+
                    "BEGIN "+
-                        "SELECT DR.id_plan_usuario, DR.id_rutina, DR.dia, E.nombre_ejercicio, E.descripcion "+
+                        "SELECT DR.id_plan_usuario, DR.id_rutina, DR.dia, DR.rutina_completada, E.nombre_ejercicio, E.descripcion " +
                         "FROM Dias_Rutina DR "+
                         "INNER JOIN Ejercicio_Rutina ER ON ER.id_rutina = DR.id_rutina "+
                         "INNER JOIN Ejercicio E ON E.id_ejercicio = ER.id_ejercicio "+
@@ -118,8 +118,8 @@ namespace MobilFit_API.Aplicacion
                     " END"+ 
                     " ELSE"+ 
                         " BEGIN "+
-                            " INSERT INTO Dias_Rutina(dia, id_rutina, id_plan_usuario) VALUES(0, "+idRutina+", "+idPlanUsuario+") "+
-                            "SELECT DR.id_plan_usuario, DR.id_rutina, DR.dia, E.nombre_ejercicio, E.descripcion " +
+                            " INSERT INTO Dias_Rutina(dia, id_rutina, rutina_completada, id_plan_usuario) VALUES(0, " + idRutina+", 0, "+idPlanUsuario+") "+
+                            "SELECT DR.id_plan_usuario, DR.id_rutina, DR.dia, DR.rutina_completada, E.nombre_ejercicio, E.descripcion " +
                             " FROM Dias_Rutina DR " +
                             " INNER JOIN Ejercicio_Rutina ER ON ER.id_rutina = DR.id_rutina " +
                             " INNER JOIN Ejercicio E ON E.id_ejercicio = ER.id_ejercicio " +
@@ -137,6 +137,7 @@ namespace MobilFit_API.Aplicacion
                 rutinaSeleccionada.DiaEntrenamientos.idPlan = int.Parse(reader["id_plan_usuario"].ToString());
                 rutinaSeleccionada.DiaEntrenamientos.idRutina = int.Parse(reader["id_rutina"].ToString());
                 rutinaSeleccionada.DiaEntrenamientos.dia = int.Parse(reader["dia"].ToString());
+                rutinaSeleccionada.RutinaCompletada = reader["rutina_completada"].ToString() == "True" ? true : false;
                 rutinaSeleccionada.Ejercicios.Add(new Ejercicio()
                 {
                     nombre_ejercicio = reader["nombre_ejercicio"].ToString(),

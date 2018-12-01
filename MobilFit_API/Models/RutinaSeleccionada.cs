@@ -9,6 +9,7 @@ namespace MobilFit_API.Models
     {
         public DiasEntrenamiento DiaEntrenamientos { get; set; }
         public List<Ejercicio> Ejercicios { get; set; }
+        public bool RutinaCompletada { get; set; }
         public RutinaSeleccionada()
         {
 
