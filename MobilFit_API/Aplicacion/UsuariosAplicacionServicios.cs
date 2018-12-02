@@ -38,8 +38,7 @@ namespace MobilFit_API.Aplicacion
                     {
                         id_usuario = int.Parse(reader["id_usuario"].ToString()),
                         nombre = reader["nombre"].ToString(),
-                        apellido_paterno = reader["apellido_paterno"].ToString(),
-                        apellido_materno = reader["apellido_materno"].ToString(),
+                        apellido = reader["apellido_paterno"].ToString(),
                         sexo = int.Parse(reader["sexo"].ToString()),
                         email = reader["email"].ToString(),
                         contraseña = reader["contrasenha"].ToString(),
@@ -80,8 +79,7 @@ namespace MobilFit_API.Aplicacion
                 {
                     objUsuarios.id_usuario = int.Parse(reader["id_usuario"].ToString());
                     objUsuarios.nombre = reader["nombre"].ToString();
-                    objUsuarios.apellido_paterno = reader["apellido_paterno"].ToString();
-                    objUsuarios.apellido_materno = reader["apellido_materno"].ToString();
+                    objUsuarios.apellido = reader["apellido"].ToString();
                     objUsuarios.sexo = int.Parse(reader["sexo"].ToString());
                     objUsuarios.email = reader["email"].ToString();
                     objUsuarios.contraseña = reader["contraseña"].ToString();
