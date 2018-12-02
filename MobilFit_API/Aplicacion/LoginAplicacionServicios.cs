@@ -24,12 +24,12 @@ namespace MobilFit_API.Aplicacion
             SqlDataReader reader;
             Usuario objUsuario;
             string sql = string.Empty;
-            sql = @"SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,
+            sql = @"SELECT U.id_usuario, U.nombre, U.apellido, U.edad, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,
                     U.id_tipocuerpo, NU.id_nivel, UO.id_objetivo
                     FROM Usuario U 
                     LEFT JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario
                     LEFT JOIN Nivel_Usuario NU ON NU.id_usuario = U.id_usuario
-                    WHERE U.email = "+email+" AND U.contraseña = "+password+"";
+                    WHERE U.email = " + email+" AND U.contraseña = "+password+"";
 
             sqlCommand = new SqlCommand(sql, connection);
             connection.Open();
@@ -67,12 +67,12 @@ namespace MobilFit_API.Aplicacion
             sql += @"DECLARE @ULTIMO_ID INT
                     INSERT INTO Usuario (nombre, apellido, edad, sexo, email, contraseña, fecha_registro, peso, altura," +
                                     "id_tipocuerpo)  VALUES ('" + usuario.nombre + "', '" + usuario.apellido+ "', " +
-                                    + usuario.edad + "," + ", " + usuario.sexo + ", '" + usuario.email + "', '" + usuario.contraseña + "', '" + fecha + "'," +
+                                    + usuario.edad + ", " + usuario.sexo + ", '" + usuario.email + "', '" + usuario.contraseña + "', '" + fecha + "'," +
                                     "" + usuario.peso + ", " + usuario.altura + ", " + usuario.id_tipoCuerpo + ")" +
                                     "(SELECT @ULTIMO_ID = scope_identity())" +//Rescata el utlimo ID_usuario insertado para insertarlo en las tablas de relacionadas al usuario
                                     "INSERT INTO Usuario_Objetivo (id_objetivo, id_usuario) VALUES (" + usuario.id_objetivo + ", @ULTIMO_ID) " +
                                     "INSERT INTO Nivel_Usuario (id_usuario, id_nivel) VALUES (@ULTIMO_ID, "+usuario.id_nivel+") " +
-                                    "SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,"+
+                                    "SELECT U.id_usuario, U.nombre, U.apellido, U.edad, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,"+
                                     "U.id_tipocuerpo, NU.id_nivel, UO.id_objetivo"+
                                     " FROM Usuario U"+
                                     " LEFT JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario"+
@@ -137,7 +137,7 @@ namespace MobilFit_API.Aplicacion
 
                 "UPDATE Usuario_Objetivo SET id_objetivo = " + usuario.id_objetivo + " WHERE id_usuario = " + id + "  " +
 
-                "SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,"+
+                "SELECT U.id_usuario, U.nombre, U.apellido, U.edad, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,"+
                 "U.id_tipocuerpo, NU.id_nivel, UO.id_objetivo "+
                 " FROM Usuario U"+
                 " LEFT JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario"+
