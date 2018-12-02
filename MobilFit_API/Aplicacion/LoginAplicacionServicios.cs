@@ -62,13 +62,13 @@ namespace MobilFit_API.Aplicacion
             SqlDataReader reader;
 
             Usuario objUsuario;
-            DateTime fecha = usuario.fechaRegistro.ToString("dd-MM-yyyy") == "01-01-0001" ? DateTime.Parse("01-01-1900") : usuario.fechaRegistro;
+            DateTime fecha = DateTime.Now;
             string sql = string.Empty;
             sql += @"DECLARE @ULTIMO_ID INT
                     INSERT INTO Usuario (nombre, apellido, edad, sexo, email, contraseña, fecha_registro, peso, altura," +
                                     "id_tipocuerpo)  VALUES ('" + usuario.nombre + "', '" + usuario.apellido+ "', " +
                                     + usuario.edad + "," + ", " + usuario.sexo + ", '" + usuario.email + "', '" + usuario.contraseña + "', '" + fecha + "'," +
-                                    "" + usuario.peso + ", " + usuario.altura + ", " + usuario.id_tipoCuerpo + ", " + usuario.id_nivel + ")" +
+                                    "" + usuario.peso + ", " + usuario.altura + ", " + usuario.id_tipoCuerpo + ")" +
                                     "(SELECT @ULTIMO_ID = scope_identity())" +//Rescata el utlimo ID_usuario insertado para insertarlo en las tablas de relacionadas al usuario
                                     "INSERT INTO Usuario_Objetivo (id_objetivo, id_usuario) VALUES (" + usuario.id_objetivo + ", @ULTIMO_ID) " +
                                     "INSERT INTO Nivel_Usuario (id_usuario, id_nivel) VALUES (@ULTIMO_ID, "+usuario.id_nivel+") " +
