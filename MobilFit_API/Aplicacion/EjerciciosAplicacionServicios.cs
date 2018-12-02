@@ -25,7 +25,8 @@ namespace MobilFit_API.Aplicacion
             List<Ejercicio> ejercicios;
 
             string sql = string.Empty;
-            sql = string.Format(@"SELECT E.id_ejercicio, E.nombre_ejercicio, E.descripcion, E.repeticiones, E.series, E.peso, E.tiempo, E.distancia, E.descanso, T.id_tips, T.descripcion
+            sql = string.Format(@"SELECT E.id_ejercicio, E.nombre_ejercicio, E.descripcion, E.repeticiones, E.series, E.peso, E.tiempo, E.distancia, E.descanso, T.id_tips,
+                                    T.descripcion AS DESCRIPCION_TIP
                                     FROM Rutina R, Ejercicio E
                                     INNER JOIN Ejercicio_Rutina ER ON ER.id_ejercicio = E.id_ejercicio
                                     INNER JOIN Tips_Ejercicio TE ON TE.id_ejercicio = E.id_ejercicio
