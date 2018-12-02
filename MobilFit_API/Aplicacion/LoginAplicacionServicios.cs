@@ -25,10 +25,11 @@ namespace MobilFit_API.Aplicacion
             Usuario objUsuario;
             string sql = string.Empty;
             sql = @"SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,
-                    U.id_tipocuerpo, U.id_nivel, UO.id_objetivo
+                    U.id_tipocuerpo, NU.id_nivel, UO.id_objetivo
                     FROM Usuario U 
-                    INNER JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario
-                    WHERE U.email =  '"+email+"' and contraseña = '"+password+"'";
+                    LEFT JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario
+                    LEFT JOIN Nivel_Usuario NU ON NU.id_usuario = U.id_usuario
+                    WHERE U.email = "+email+" AND U.contraseña = "+password+"";
 
             sqlCommand = new SqlCommand(sql, connection);
             connection.Open();
@@ -38,8 +39,8 @@ namespace MobilFit_API.Aplicacion
             {
                 objUsuario.id_usuario = int.Parse(reader["id_usuario"].ToString());
                 objUsuario.nombre = reader["nombre"].ToString();
-                objUsuario.apellido_paterno = reader["apellido_paterno"].ToString();
-                objUsuario.apellido_materno = reader["apellido_materno"].ToString();
+                objUsuario.apellido = reader["apellido"].ToString();
+                objUsuario.edad = int.Parse(reader["edad"].ToString());
                 objUsuario.sexo = reader["sexo"].ToString() == "True" ? 1 : 0;
                 objUsuario.email = reader["email"].ToString();
                 objUsuario.contraseña = reader["contraseña"].ToString();
@@ -64,16 +65,18 @@ namespace MobilFit_API.Aplicacion
             DateTime fecha = usuario.fechaRegistro.ToString("dd-MM-yyyy") == "01-01-0001" ? DateTime.Parse("01-01-1900") : usuario.fechaRegistro;
             string sql = string.Empty;
             sql += @"DECLARE @ULTIMO_ID INT
-                    INSERT INTO Usuario (nombre, apellido_paterno, apellido_materno, sexo, email, contraseña, fecha_registro, peso, altura," +
-                                    "id_tipocuerpo, id_nivel)  VALUES ('" + usuario.nombre + "', '" + usuario.apellido_paterno + "', '" + usuario.apellido_materno + "'" +
-                                    ", " + usuario.sexo + ", '" + usuario.email + "', '" + usuario.contraseña + "', '" + fecha + "'," +
+                    INSERT INTO Usuario (nombre, apellido, edad, sexo, email, contraseña, fecha_registro, peso, altura," +
+                                    "id_tipocuerpo)  VALUES ('" + usuario.nombre + "', '" + usuario.apellido+ "', " +
+                                    + usuario.edad + "," + ", " + usuario.sexo + ", '" + usuario.email + "', '" + usuario.contraseña + "', '" + fecha + "'," +
                                     "" + usuario.peso + ", " + usuario.altura + ", " + usuario.id_tipoCuerpo + ", " + usuario.id_nivel + ")" +
                                     "(SELECT @ULTIMO_ID = scope_identity())" +//Rescata el utlimo ID_usuario insertado para insertarlo en las tablas de relacionadas al usuario
                                     "INSERT INTO Usuario_Objetivo (id_objetivo, id_usuario) VALUES (" + usuario.id_objetivo + ", @ULTIMO_ID) " +
-                                    "SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura," +
-                                    " U.id_tipocuerpo, U.id_nivel, UO.id_objetivo" +
-                                    " FROM Usuario U" +
-                                    " INNER JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario" +
+                                    "INSERT INTO Nivel_Usuario (id_usuario, id_nivel) VALUES (@ULTIMO_ID, "+usuario.id_nivel+") " +
+                                    "SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,"+
+                                    "U.id_tipocuerpo, NU.id_nivel, UO.id_objetivo"+
+                                    " FROM Usuario U"+
+                                    " LEFT JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario"+
+                                    " LEFT JOIN Nivel_Usuario NU ON NU.id_usuario = U.id_usuario"+
                                     " WHERE U.id_usuario = @ULTIMO_ID";
 
             sqlCommand = new SqlCommand(sql, connection);
@@ -84,8 +87,8 @@ namespace MobilFit_API.Aplicacion
             {
                 objUsuario.id_usuario = int.Parse(reader["id_usuario"].ToString());
                 objUsuario.nombre = reader["nombre"].ToString();
-                objUsuario.apellido_paterno = reader["apellido_paterno"].ToString();
-                objUsuario.apellido_materno = reader["apellido_materno"].ToString();
+                objUsuario.apellido = reader["apellido"].ToString();
+                objUsuario.edad = int.Parse(reader["edad"].ToString());
                 objUsuario.sexo = reader["sexo"].ToString() == "True" ? 1 : 0;
                 objUsuario.email = reader["email"].ToString();
                 objUsuario.contraseña = reader["contraseña"].ToString();
@@ -128,17 +131,18 @@ namespace MobilFit_API.Aplicacion
             Usuario objUsuario;
 
             string sql = string.Empty;
-            sql += @"UPDATE Usuario SET nombre = '" + usuario.nombre + "', apellido_paterno = '" + usuario.apellido_paterno + "', sexo = " + usuario.sexo + ", email = '" + usuario.email + "', " +
+            sql += @"UPDATE Usuario SET nombre = '" + usuario.nombre + "', apellido = '" + usuario.apellido + "', edad = "+ usuario.edad+ "', sexo = " + usuario.sexo + ", email = '" + usuario.email + "', " +
                 "contraseña = '" + usuario.contraseña + "', peso = " + usuario.sexo + ", altura = " + usuario.altura + ", id_tipocuerpo = " + usuario.id_tipoCuerpo + ", id_nivel = " + usuario.id_nivel + " " +
                 "WHERE id_usuario = " + id + "  " +
 
                 "UPDATE Usuario_Objetivo SET id_objetivo = " + usuario.id_objetivo + " WHERE id_usuario = " + id + "  " +
 
-                "SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura, " +
-                "U.id_tipocuerpo, U.id_nivel, UO.id_objetivo " +
-                "FROM Usuario U " +
-                "INNER JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario " +
-                "WHERE U.id_usuario = " + id + "  ";
+                "SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,"+
+                "U.id_tipocuerpo, NU.id_nivel, UO.id_objetivo "+
+                " FROM Usuario U"+
+                " LEFT JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario"+
+                " LEFT JOIN Nivel_Usuario NU ON NU.id_usuario = U.id_usuario"+
+                " WHERE U.id_usuario = "+id+"";
 
             sqlCommand = new SqlCommand(sql, connection);
             connection.Open();
@@ -148,8 +152,8 @@ namespace MobilFit_API.Aplicacion
             {
                 objUsuario.id_usuario = int.Parse(reader["id_usuario"].ToString());
                 objUsuario.nombre = reader["nombre"].ToString();
-                objUsuario.apellido_paterno = reader["apellido_paterno"].ToString();
-                objUsuario.apellido_materno = reader["apellido_materno"].ToString();
+                objUsuario.apellido = reader["apellido"].ToString();
+                objUsuario.edad = int.Parse(reader["edad"].ToString());
                 objUsuario.sexo = reader["sexo"].ToString() == "True" ? 1 : 0;
                 objUsuario.email = reader["email"].ToString();
                 objUsuario.contraseña = reader["contraseña"].ToString();
