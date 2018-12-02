@@ -25,9 +25,11 @@ namespace MobilFit_API.Aplicacion
             List<Ejercicio> ejercicios;
 
             string sql = string.Empty;
-            sql = string.Format(@"SELECT E.id_ejercicio, E.nombre_ejercicio, E.descripcion, E.repeticiones, E.series, E.peso, E.tiempo, E.distancia, E.descanso
+            sql = string.Format(@"SELECT E.id_ejercicio, E.nombre_ejercicio, E.descripcion, E.repeticiones, E.series, E.peso, E.tiempo, E.distancia, E.descanso, T.id_tips, T.descripcion
                                     FROM Rutina R, Ejercicio E
                                     INNER JOIN Ejercicio_Rutina ER ON ER.id_ejercicio = E.id_ejercicio
+                                    INNER JOIN Tips_Ejercicio TE ON TE.id_ejercicio = E.id_ejercicio
+                                    LEFT JOIN Tips T ON T.id_tips = TE.id_tips_ejercicio
                                     WHERE R.id_rutina = {0} AND R.id_rutina = ER.id_rutina", id_rutina);
             try
             {
@@ -47,8 +49,12 @@ namespace MobilFit_API.Aplicacion
                         peso = decimal.Parse(reader["peso"].ToString()),
                         tiempo = DateTime.Parse(reader["tiempo"].ToString()),
                         distancia = decimal.Parse(reader["distancia"].ToString()),
-                        descanso = decimal.Parse(reader["descanso"].ToString())
-
+                        descanso = decimal.Parse(reader["descanso"].ToString()),
+                        Tips = new Tips()
+                        {
+                            id_tips = int.Parse(reader["id_tips"].ToString()),
+                            descripcion = reader["descripcion"].ToString(),
+                        }
                     });
 
                 }

@@ -16,6 +16,7 @@ namespace MobilFit_API.Models
         public DateTime tiempo { get; set; }
         public decimal distancia { get; set; }
         public decimal descanso { get; set; }
+        public Tips Tips { get; set; }
         public Ejercicio()
         {
 
