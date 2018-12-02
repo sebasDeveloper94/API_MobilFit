@@ -29,7 +29,7 @@ namespace MobilFit_API.Aplicacion
                     FROM Usuario U 
                     LEFT JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario
                     LEFT JOIN Nivel_Usuario NU ON NU.id_usuario = U.id_usuario
-                    WHERE U.email = " + email+" AND U.contraseña = "+password+"";
+                    WHERE U.email = '"+email+"' and U.contraseña = '"+password+"'";
 
             sqlCommand = new SqlCommand(sql, connection);
             connection.Open();
