@@ -27,8 +27,8 @@ namespace MobilFit_API.Aplicacion
             sql = @"SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,
                     U.id_tipocuerpo, NU.id_nivel, UO.id_objetivo
                     FROM Usuario U 
-                    LEFT JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario
-                    LEFT JOIN Nivel_Usuario NU ON NU.id_usuario = U.id_usuario
+                    INNER JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario
+                    INNER JOIN Nivel_Usuario NU ON NU.id_usuario = U.id_usuario
                     WHERE U.email = "+email+" AND U.contraseña = "+password+"";
 
             sqlCommand = new SqlCommand(sql, connection);
@@ -75,8 +75,8 @@ namespace MobilFit_API.Aplicacion
                                     "SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,"+
                                     "U.id_tipocuerpo, NU.id_nivel, UO.id_objetivo"+
                                     " FROM Usuario U"+
-                                    " LEFT JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario"+
-                                    " LEFT JOIN Nivel_Usuario NU ON NU.id_usuario = U.id_usuario"+
+                                    " INNER JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario"+
+                                    " INNER JOIN Nivel_Usuario NU ON NU.id_usuario = U.id_usuario"+
                                     " WHERE U.id_usuario = @ULTIMO_ID";
 
             sqlCommand = new SqlCommand(sql, connection);
@@ -140,8 +140,8 @@ namespace MobilFit_API.Aplicacion
                 "SELECT U.id_usuario, U.nombre, U.apellido_paterno, U.apellido_materno, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,"+
                 "U.id_tipocuerpo, NU.id_nivel, UO.id_objetivo "+
                 " FROM Usuario U"+
-                " LEFT JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario"+
-                " LEFT JOIN Nivel_Usuario NU ON NU.id_usuario = U.id_usuario"+
+                " INNER JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario"+
+                " INNER JOIN Nivel_Usuario NU ON NU.id_usuario = U.id_usuario"+
                 " WHERE U.id_usuario = "+id+"";
 
             sqlCommand = new SqlCommand(sql, connection);
