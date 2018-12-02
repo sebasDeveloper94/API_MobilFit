@@ -53,7 +53,7 @@ namespace MobilFit_API.Aplicacion
                         Tips = new Tips()
                         {
                             id_tips = int.Parse(reader["id_tips"].ToString()),
-                            descripcion = reader["descripcion"].ToString(),
+                            descripcion = reader["DESCRIPCION_TIP"].ToString(),
                         }
                     });
 
