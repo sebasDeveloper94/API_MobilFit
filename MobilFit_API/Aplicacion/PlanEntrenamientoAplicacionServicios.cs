@@ -206,7 +206,7 @@ namespace MobilFit_API.Aplicacion
                         INSERT INTO Desempeño (fecha, horas_entrenamieto, distacia_recorrida, id_plan_usuario) values (GETDATE(), {2}, {3}, {1})
                         SELECT @ID_DESEMPEÑO = SCOPE_IDENTITY()
 
-                        SELECT @TOTAL_HORAS = SUM(DE.horas_entrenamieto), @KM_RECORRIDOS = SUM(DE.distacia_recorrida) FROM Desempeño DE WHERE DE.id_plan_usuario = 49
+                        SELECT @TOTAL_HORAS = SUM(DE.horas_entrenamieto), @KM_RECORRIDOS = SUM(DE.distacia_recorrida) FROM Desempeño DE WHERE DE.id_plan_usuario = {1}
 
                         --calculos de imc y igc
                         DECLARE @PESO INT
@@ -236,7 +236,7 @@ namespace MobilFit_API.Aplicacion
                         SELECT  @CANTIDAD_RUTINAS = COUNT(PR.id_rutina), @RUTINAS_COMPLETAS = (SELECT COUNT(DR.rutina_completada) from Dias_Rutina DR WHERE DR.rutina_completada > 0)
                         FROM Plan_Usuario PU
                         INNER JOIN Plan_Rutina PR ON PR.id_plan_entrenamiento = PU.id_plan_entrenamiento
-                        WHERE  PU.id_plan_usuario = 49
+                        WHERE  PU.id_plan_usuario = {1}
                         SELECT @PORCENTAJERUTINA = (@RUTINAS_COMPLETAS / @CANTIDAD_RUTINAS) * 100
 
                         --INSERSION EN EL REPORTE DE DESEMPEÑO
