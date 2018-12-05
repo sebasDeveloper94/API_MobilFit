@@ -10,6 +10,7 @@ using System.Web.Http;
 using MobilFit_API.Aplicacion;
 using MobilFit_API.Models;
 using MobilFit_API.Persistencia;
+using Newtonsoft.Json;
 
 namespace MobilFit_API.Controllers
 {
@@ -53,6 +54,33 @@ namespace MobilFit_API.Controllers
                 else
                 {
                     return NotFound();
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [AcceptVerbs("GET")]
+        [HttpGet]
+        public IHttpActionResult TerminarRutina(int idRutina, string jsonDesempeño)
+        {
+            Desempeño objDesempeño = new Desempeño();
+            MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonDesempeño));
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Desempeño));
+            objDesempeño = JsonConvert.DeserializeObject<Desempeño>(jsonDesempeño);
+            if (objDesempeño != null)
+            {
+                PlanEntrenamientoAplicacionServicios planApp = new PlanEntrenamientoAplicacionServicios(conexionSQL.cadenaConexion);
+                ReporteDesempeño reporte = planApp.TerminaRutina(idRutina, objDesempeño);
+                if (reporte.id_reporteDesempeño > 0)
+                {
+                    return Ok(reporte);
+                }
+                else
+                {
+                    return Ok();
                 }
             }
             else

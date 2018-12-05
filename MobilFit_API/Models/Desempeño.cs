@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace MobilFit_API.Models
 {
-    class Desempeño
+    public class Desempeño
     {
         public int id_desempeño { get; set; }
         public DateTime fecha { get; set; }
-        public DateTime tiempo_entrenamiento { get; set; }
-        public decimal porcentaje_rutina { get; set; }
+        public float horas_entrenamiento { get; set; }
         public decimal distancia_recorrida { get; set; }
-        public int id_usuario { get; set; }
+        public int id_plan_usuario { get; set; }
         public Desempeño()
         {
 
