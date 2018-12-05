@@ -131,18 +131,15 @@ namespace MobilFit_API.Aplicacion
             Usuario objUsuario;
 
             string sql = string.Empty;
-            sql += @"UPDATE Usuario SET nombre = '" + usuario.nombre + "', apellido = '" + usuario.apellido + "', edad = "+ usuario.edad+ "', sexo = " + usuario.sexo + ", email = '" + usuario.email + "', " +
-                "contraseña = '" + usuario.contraseña + "', peso = " + usuario.sexo + ", altura = " + usuario.altura + ", id_tipocuerpo = " + usuario.id_tipoCuerpo + ", id_nivel = " + usuario.id_nivel + " " +
-                "WHERE id_usuario = " + id + "  " +
-
-                "UPDATE Usuario_Objetivo SET id_objetivo = " + usuario.id_objetivo + " WHERE id_usuario = " + id + "  " +
-
-                "SELECT U.id_usuario, U.nombre, U.apellido, U.edad, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,"+
-                "U.id_tipocuerpo, NU.id_nivel, UO.id_objetivo "+
-                " FROM Usuario U"+
-                " LEFT JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario"+
-                " LEFT JOIN Nivel_Usuario NU ON NU.id_usuario = U.id_usuario"+
-                " WHERE U.id_usuario = "+id+"";
+            sql += @"UPDATE Usuario SET nombre = '"+usuario.nombre+"', apellido = '"+usuario.apellido+"', edad = "+usuario.edad+", sexo = "+usuario.sexo+", email = '"+usuario.email+"', "+
+                    " contraseña = '"+usuario.contraseña+"', peso = "+usuario.peso+", altura = "+usuario.altura+", id_tipocuerpo = "+usuario.id_tipoCuerpo+" " + 
+                    " WHERE id_usuario = "+id+" "+ 
+                    " UPDATE Usuario_Objetivo SET id_objetivo = "+usuario.id_objetivo+ " WHERE id_usuario = " + id + " " +
+                    " UPDATE Nivel_Usuario SET id_nivel = " + usuario.id_nivel + " WHERE id_usuario = " + id + " " +
+                    " SELECT U.id_usuario, U.nombre, U.apellido, U.edad, U.sexo, U.email, U.contraseña, U.fecha_registro, U.peso, U.altura,U.id_tipocuerpo, NU.id_nivel, UO.id_objetivo  "+
+                    " FROM Usuario U "+ 
+                    " LEFT JOIN Usuario_Objetivo UO ON UO.id_usuario = U.id_usuario " +
+                    " LEFT JOIN Nivel_Usuario NU ON NU.id_usuario = U.id_usuario WHERE U.id_usuario = " + id + " ";
 
             sqlCommand = new SqlCommand(sql, connection);
             connection.Open();
