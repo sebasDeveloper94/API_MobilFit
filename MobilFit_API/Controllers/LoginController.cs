@@ -72,13 +72,13 @@ namespace MobilFit_API.Controllers
             return Ok(id);
         }
 
-        [HttpPut]
+        [AcceptVerbs("GET")]
+        [HttpGet]
         public IHttpActionResult EditarUsuario(int idUsuario, string jsonUsuario)
         {
             Usuario objUsuario = new Usuario();
             MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(jsonUsuario));
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Usuario));
-            objUsuario = serializer.ReadObject(ms) as Usuario;
+            objUsuario = JsonConvert.DeserializeObject<Usuario>(jsonUsuario);
 
             LoginAplicacionServicios loginApp = new LoginAplicacionServicios(conexionSQL.cadenaConexion);
             Usuario usuario = new Usuario();

@@ -24,16 +24,8 @@ namespace MobilFit_API.Controllers
             return usuarios;
         }
 
-        public IHttpActionResult GetUsuario(int id_usuario)
-        {
-            UsuariosAplicacionServicios usuarioApp = new UsuariosAplicacionServicios(conexionSQL.cadenaConexion);
-            Usuario objUsuario = new Usuario();
-            objUsuario = usuarioApp.GetUsuario(id_usuario);
-            if (objUsuario == null)
-            {
-                return NotFound();
-            }
-            return Ok(objUsuario);
-        }
+
     }
+
+
 }
