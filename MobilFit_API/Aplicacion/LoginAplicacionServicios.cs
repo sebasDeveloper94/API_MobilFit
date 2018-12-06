@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -162,7 +163,46 @@ namespace MobilFit_API.Aplicacion
                 objUsuario.id_objetivo = int.Parse(reader["id_objetivo"].ToString());
             }
 
-            return objUsuario;
+            
+return objUsuario;
+        }
+
+        public int SendEmail(string email)
+        {
+            MailMessage emailSended = new MailMessage();
+            emailSended.To.Add(new MailAddress(email));
+            emailSended.From = new MailAddress("MobilFit@MobilFit.com");
+            emailSended.Subject = "Recuperación de constraseña ( " + DateTime.Now.ToString("dd / MMM / yyy hh:mm:ss") + " ) ";
+            emailSended.Body = "Su nueva contraseña MobilFit es: " + "<strong>ajusdnH96</strong>" + "\n" + "Por favor cambie la contraseña despues de iniciar sesión.";
+            emailSended.IsBodyHtml = true;
+            emailSended.Priority = MailPriority.Normal;
+
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp.sendgrid.net";
+            smtp.Port = 2525;
+            smtp.EnableSsl = false;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new System.Net.NetworkCredential("azure_a7c75d7f43677a4b90996abe5d8b4273@azure.com", "Flip2009");
+
+            string output = null;
+
+            try
+            {
+                smtp.Send(emailSended);
+                emailSended.Dispose();
+                output = "Corre electrónico fue enviado satisfactoriamente.";
+            }
+            catch (Exception ex)
+            {
+                output = "Error enviando correo electrónico: " + ex.Message;
+            }
+
+            if (output == string.Empty)
+            {
+                return 0;
+            }
+
+            return 1;
         }
     }
 }
