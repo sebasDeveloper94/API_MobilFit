@@ -233,7 +233,7 @@ namespace MobilFit_API.Aplicacion
                         DECLARE @CANTIDAD_RUTINAS FLOAT
                         DECLARE @RUTINAS_COMPLETAS FLOAT
                         DECLARE @PORCENTAJERUTINA FLOAT
-                        SELECT  @CANTIDAD_RUTINAS = COUNT(PR.id_rutina), @RUTINAS_COMPLETAS = (SELECT COUNT(DR.rutina_completada) from Dias_Rutina DR WHERE DR.rutina_completada > 0)
+                        SELECT  @CANTIDAD_RUTINAS = COUNT(PR.id_rutina), @RUTINAS_COMPLETAS = (SELECT COUNT(DR.rutina_completada) from Dias_Rutina DR WHERE DR.id_plan_usuario = {1} and DR.rutina_completada > 0)
                         FROM Plan_Usuario PU
                         INNER JOIN Plan_Rutina PR ON PR.id_plan_entrenamiento = PU.id_plan_entrenamiento
                         WHERE  PU.id_plan_usuario = {1}
